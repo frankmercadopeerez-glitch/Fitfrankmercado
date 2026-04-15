@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fitness Blog - Expert Tips & Guides | Frank Mercado Fit</title>
+    <meta
+      name="description"
+      content="Expert fitness tips, nutrition guides, and workout advice from certified coach Frank Mercado. Learn how to transform your body sustainably."
+    />
+    <meta
+      name="keywords"
+      content="fitness blog, workout tips, nutrition advice, health blog, exercise guides, Frank Mercado"
+    />
+    <link rel="canonical" href="https://fit.frankmercado.com/blog/" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Fitness Blog - Frank Mercado Fit" />
+    <meta
+      property="og:description"
+      content="Expert fitness tips and nutrition guides from certified coach Frank Mercado."
+    />
+    <meta property="og:url" content="https://fit.frankmercado.com/blog/" />
+    <meta property="og:type" content="blog" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../images/favicon.png" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      if (
+        localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+      tailwind.config = { darkMode: "class" };
+    </script>
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300"
+  >
+    <!-- Navigation -->
+    <header
+      class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800"
+    >
+      <nav
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <a
+          href="../index.html"
+          class="text-2xl font-bold text-gray-900 dark:text-white"
+        >
+          Frank Mercado
+          <span class="text-blue-600 dark:text-blue-500">Fit</span>
+        </a>
+        <div class="hidden md:flex items-center space-x-6">
+          <a
+            href="../index.html"
+            class="hover:text-blue-600 dark:hover:text-blue-400"
+            >Home</a
+          >
+          <a
+            href="../about.html"
+            class="hover:text-blue-600 dark:hover:text-blue-400"
+            >About</a
+          >
+          <a
+            href="../planes.html"
+            class="hover:text-blue-600 dark:hover:text-blue-400"
+            >Plans</a
+          >
+          <a
+            href="index.html"
+            class="text-blue-600 dark:text-blue-400 font-medium"
+            >Blog</a
+          >
+          <a
+            href="../contacto.html"
+            class="hover:text-blue-600 dark:hover:text-blue-400"
+            >Contact</a
+          >
+        </div>
+        <div class="flex items-center space-x-3">
+          <div class="flex items-center space-x-2 text-sm font-medium">
+            <button
+              id="lang-es-btn"
+              class="text-gray-900 dark:text-white opacity-50 hover:opacity-100"
+              data-lang="es"
+            >
+              ES
+            </button>
+            <span class="text-gray-300 dark:text-gray-600">|</span>
+            <button
+              id="lang-en-btn"
+              class="text-gray-900 dark:text-white opacity-50 hover:opacity-100"
+              data-lang="en"
+            >
+              EN
+            </button>
+          </div>
+          <button
+            id="theme-toggle-btn"
+            class="flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+          ></button>
+          <button
+            id="mobile-menu-button"
+            class="md:hidden p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            </svg>
+          </button>
+        </div>
+      </nav>
+      <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 space-y-2">
+        <a href="../index.html" class="block py-2 hover:text-blue-600">Home</a>
+        <a href="../about.html" class="block py-2 hover:text-blue-600">About</a>
+        <a href="../planes.html" class="block py-2 hover:text-blue-600"
+          >Plans</a
+        >
+        <a href="index.html" class="block py-2 text-blue-600 font-medium"
+          >Blog</a
+        >
+        <a href="../contacto.html" class="block py-2 hover:text-blue-600"
+          >Contact</a
+        >
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section
+        class="py-16 md:py-24 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900"
+      >
+        <div class="container mx-auto px-6 text-center">
+          <h1
+            class="text-4xl md:text-5xl font-extrabold mb-6"
+            data-key="blog_title"
+          >
+            Fitness <span class="text-blue-600 dark:text-blue-500">Blog</span>
+          </h1>
+          <p
+            class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
+            data-key="blog_subtitle"
+          >
+            Expert tips, nutrition guides, and workout advice to help you
+            achieve your fitness goals.
+          </p>
+        </div>
+      </section>
+
+      <!-- Blog Posts Grid -->
+      <section class="py-16 md:py-24">
+        <div class="container mx-auto px-6">
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Article 1 -->
+            <article
+              class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-shadow"
+            >
+              <a href="como-empezar-entrenamiento.html" class="block">
+                <div
+                  class="h-48 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-16 w-16 text-white opacity-80"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
+                  </svg>
+                </div>
+                <div class="p-6">
+                  <div
+                    class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-3"
+                  >
+                    <span>Feb 15, 2026</span>
+                    <span>•</span>
+                    <span>8 min read</span>
+                  </div>
+                  <h2
+                    class="text-xl font-bold mb-3 group-hover:text-blue-600 transition-colors"
+                    data-key="blog_art1_title"
+                  >
+                    How to Start Training: Complete Guide for Beginners
+                  </h2>
+                  <p
+                    class="text-gray-600 dark:text-gray-400 mb-4"
+                    data-key="blog_art1_excerpt"
+                  >
+                    Learn the fundamentals of starting a workout routine. From
+                    choosing exercises to creating a schedule that works for
+                    you.
+                  </p>
+                  <span
+                    class="text-blue-600 font-medium group-hover:underline"
+                    data-key="blog_read_more"
+                    >Read more →</span
+                  >
+                </div>
+              </a>
+            </article>
+
+            <!-- Article 2 -->
+            <article
+              class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-shadow"
+            >
+              <a href="nutricion-para-principiantes.html" class="block">
+                <div
+                  class="h-48 bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-16 w-16 text-white opacity-80"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                    />
+                  </svg>
+                </div>
+                <div class="p-6">
+                  <div
+                    class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-3"
+                  >
+                    <span>Feb 10, 2026</span>
+                    <span>•</span>
+                    <span>10 min read</span>
+                  </div>
+                  <h2
+                    class="text-xl font-bold mb-3 group-hover:text-blue-600 transition-colors"
+                    data-key="blog_art2_title"
+                  >
+                    Nutrition for Beginners: What You Really Need to Know
+                  </h2>
+                  <p
+                    class="text-gray-600 dark:text-gray-400 mb-4"
+                    data-key="blog_art2_excerpt"
+                  >
+                    Forget complicated diets. Learn the simple nutrition
+                    principles that will fuel your transformation.
+                  </p>
+                  <span class="text-blue-600 font-medium group-hover:underline"
+                    >Read more →</span
+                  >
+                </div>
+              </a>
+            </article>
+
+            <!-- Article 3 -->
+            <article
+              class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-shadow"
+            >
+              <a href="habitos-saludables.html" class="block">
+                <div
+                  class="h-48 bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-16 w-16 text-white opacity-80"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <div class="p-6">
+                  <div
+                    class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-3"
+                  >
+                    <span>Feb 5, 2026</span>
+                    <span>•</span>
+                    <span>7 min read</span>
+                  </div>
+                  <h2
+                    class="text-xl font-bold mb-3 group-hover:text-blue-600 transition-colors"
+                    data-key="blog_art3_title"
+                  >
+                    5 Healthy Habits That Will Change Your Life
+                  </h2>
+                  <p
+                    class="text-gray-600 dark:text-gray-400 mb-4"
+                    data-key="blog_art3_excerpt"
+                  >
+                    Small daily changes that lead to big results. Build a
+                    sustainable healthy lifestyle step by step.
+                  </p>
+                  <span class="text-blue-600 font-medium group-hover:underline"
+                    >Read more →</span
+                  >
+                </div>
+              </a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Newsletter CTA -->
+      <section class="py-16 bg-gradient-to-r from-blue-600 to-purple-600">
+        <div class="container mx-auto px-6 text-center">
+          <h2
+            class="text-3xl font-bold text-white mb-4"
+            data-key="blog_newsletter_title"
+          >
+            Get Weekly Fitness Tips
+          </h2>
+          <p
+            class="text-blue-100 mb-8 max-w-xl mx-auto"
+            data-key="blog_newsletter_text"
+          >
+            Subscribe to receive exclusive content, workout tips, and nutrition
+            advice directly in your inbox.
+          </p>
+          <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <input
+              type="email"
+              placeholder="Your email"
+              class="flex-1 px-4 py-3 rounded-lg focus:ring-2 focus:ring-white focus:outline-none"
+            />
+            <button
+              type="submit"
+              class="bg-white text-blue-600 font-bold px-6 py-3 rounded-lg hover:bg-blue-50 transition"
+              data-key="blog_subscribe"
+            >
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 dark:bg-gray-800 py-12">
+      <div class="container mx-auto px-6">
+        <div class="grid md:grid-cols-4 gap-8">
+          <div>
+            <h3 class="text-xl font-bold mb-4">
+              Frank Mercado <span class="text-blue-600">Fit</span>
+            </h3>
+            <p class="text-gray-600 dark:text-gray-400">
+              Transform your body. Transform your life.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-bold mb-4">Quick Links</h4>
+            <ul class="space-y-2 text-gray-600 dark:text-gray-400">
+              <li>
+                <a href="../index.html" class="hover:text-blue-600">Home</a>
+              </li>
+              <li>
+                <a href="../about.html" class="hover:text-blue-600">About</a>
+              </li>
+              <li>
+                <a href="../planes.html" class="hover:text-blue-600">Plans</a>
+              </li>
+              <li><a href="index.html" class="hover:text-blue-600">Blog</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold mb-4">Support</h4>
+            <ul class="space-y-2 text-gray-600 dark:text-gray-400">
+              <li><a href="../faq.html" class="hover:text-blue-600">FAQ</a></li>
+              <li>
+                <a href="../contacto.html" class="hover:text-blue-600"
+                  >Contact</a
+                >
+              </li>
+              <li>
+                <a href="../freeplan/" class="hover:text-blue-600">Free Plan</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold mb-4">Legal</h4>
+            <ul class="space-y-2 text-gray-600 dark:text-gray-400">
+              <li>
+                <a
+                  href="../politica-privacidad.html"
+                  class="hover:text-blue-600"
+                  >Privacy Policy</a
+                >
+              </li>
+              <li>
+                <a
+                  href="../terminos-condiciones.html"
+                  class="hover:text-blue-600"
+                  >Terms & Conditions</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="border-t border-gray-200 dark:border-gray-700 mt-8 pt-8 text-center text-gray-600 dark:text-gray-400"
+        >
+          <p>&copy; 2026 Frank Mercado Fit. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+  </body>
+</html>

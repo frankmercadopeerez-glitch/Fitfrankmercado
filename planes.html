@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planes de Coaching - Frank Mercado Fit</title>
+    <link rel="icon" type="image/jpeg" href="images/favicon.jpg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Script para Modo Noche/Día y configuración de Tailwind -->
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        tailwind.config = {
+          darkMode: 'class',
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .swiper-container {
+            width: 100%;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 320px;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .dark .swiper-slide {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .swiper-slide .testimonial-text {
+            min-height: 100px; /* Adjusted height for text */
+        }
+        .swiper-pagination-bullet-active {
+            background: #3b82f6 !important;
+        }
+    </style>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+
+    <header class="bg-white dark:bg-gray-800 shadow-sm dark:shadow-md sticky top-0 z-50 transition-colors duration-300">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-gray-900 dark:text-white">Frank Mercado <span class="text-blue-600">Fit</span></a>
+            <div class="flex items-center space-x-2 md:space-x-5">
+                <a href="planes.html" data-key="navPlanes" class="hidden md:inline-block text-blue-600 font-semibold">Planes</a>
+                
+                <!-- Nuevo Selector de Idioma con Banderas -->
+                <div class="relative group">
+                    <button id="current-lang-btn" class="flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+                        <!-- El SVG de la bandera actual se insertará aquí mediante JS -->
+                    </button>
+                    <div class="absolute top-full right-0 mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 w-40">
+                        <a href="#" id="lang-es-dropdown" class="flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rounded-sm" viewBox="0 0 3 2"><path fill="#FCDD09" d="M0 0h3v2H0z"/><path fill="#DA121A" d="M0 0h3v.5H0zm0 1.5h3V2H0z"/></svg>
+                             <span data-key="langSpanish">Español</span>
+                        </a>
+                        <a href="#" id="lang-en-dropdown" class="flex items-center space-x-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rounded-sm" viewBox="0 0 60 30" ><clipPath id="s"><path d="M0 0v30h60V0z"/></clipPath><clipPath id="t"><path d="M30 15h30v15zv15h-30zh-30v-15zv-15h30z"/></clipPath><g clip-path="url(#s)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" clip-path="url(#t)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg>
+                             <span data-key="langEnglish">English</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Botón Modo Noche/Día -->
+                <button id="theme-toggle" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-sm p-2.5">
+                    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="bg-gray-50 dark:bg-gray-900/50 py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 data-key="testimonialsTitle" class="text-3xl lg:text-4xl font-bold mb-2 text-gray-900 dark:text-white">Resultados Reales, Vidas Transformadas</h2>
+                <p data-key="testimonialsSubtitle" class="text-lg text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto">No tienes que creernos a nosotros. Escucha a quienes ya han recorrido este camino.</p>
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide bg-white dark:bg-gray-800">
+                            <img src="images/transformacion1.jpg" class="w-full h-96 object-cover rounded-t-lg" alt="Transformación de cliente">
+                            <div class="p-6">
+                                <p data-key="testimonial1Text" class="text-gray-600 dark:text-gray-300 mb-4 testimonial-text">"Frank cambió mi perspectiva sobre el fitness. Su plan fue fácil de seguir y los resultados han sido increíbles. ¡Lo recomiendo al 100%!"</p>
+                                <p class="font-bold text-gray-800 dark:text-gray-100">- Ana M.</p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide bg-white dark:bg-gray-800">
+                           <img src="images/transformacion2.jpg" class="w-full h-96 object-cover rounded-t-lg" alt="Transformación de cliente">
+                           <div class="p-6">
+                                <p data-key="testimonial2Text" class="text-gray-600 dark:text-gray-300 mb-4 testimonial-text">"¡El mejor coach! Siempre está dispuesto a ayudar y a motivarte. Gracias a él, he logrado metas que creía imposibles."</p>
+                                <p class="font-bold text-gray-800 dark:text-gray-100">- Carlos V.</p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide bg-white dark:bg-gray-800">
+                           <img src="images/transformacion3.jpg" class="w-full h-96 object-cover rounded-t-lg" alt="Transformación de cliente">
+                           <div class="p-6">
+                                <p data-key="testimonial3Text" class="text-gray-600 dark:text-gray-300 mb-4 testimonial-text">"El Sistema M-Fit es justo lo que necesitaba. Un programa realista y efectivo. He aprendido a comer mejor y a entrenar de forma inteligente."</p>
+                                <p class="font-bold text-gray-800 dark:text-gray-100">- Sofia L.</p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide bg-white dark:bg-gray-800">
+                           <img src="images/transformacion4.jpg" class="w-full h-96 object-cover rounded-t-lg" alt="Transformación de cliente">
+                           <div class="p-6">
+                                <p data-key="testimonial4Text" class="text-gray-600 dark:text-gray-300 mb-4 testimonial-text">"Nunca pensé que podría lograr tanto. El apoyo constante de Frank fue clave. ¡Me siento más fuerte y con más energía que nunca!"</p>
+                                <p class="font-bold text-gray-800 dark:text-gray-100">- David G.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="py-20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 data-key="plansTitle" class="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">Elige el Plan Perfecto Para Ti</h2>
+                <p data-key="plansSubtitle" class="text-lg text-gray-600 dark:text-gray-300 mt-4 mb-12 max-w-2xl mx-auto">Todos los planes son 100% personalizados y diseñados para garantizar resultados.</p>
+                <div class="grid lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    
+                    <div class="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg p-8 flex flex-col">
+                        <h3 data-key="plan1Title" class="text-2xl font-bold mb-2">M-Fit Kickstart</h3>
+                        <p data-key="plan1For" class="text-gray-500 dark:text-gray-400 mb-6">Para un impulso inicial con guía experta.</p>
+                        <p class="text-5xl font-black mb-6">$199<span class="text-lg font-semibold text-gray-500 dark:text-gray-400">.99<span data-key="perMonth">/mes</span></span></p>
+                        <ul class="text-left space-y-4 mb-8 flex-grow">
+                            <li data-key="plan1Feat1" class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Plan de entrenamiento personalizado</li>
+                            <li data-key="plan1Feat2" class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Plan de nutrición y macros</li>
+                            <li data-key="plan1Feat3" class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Check-in semanal vía email</li>
+                        </ul>
+                        <a href="https://calendly.com/frankmercadofit/sesion-estrategia" target="_blank" data-key="planButton" class="mt-auto block w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Empezar Ahora</a>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 border-4 border-blue-600 rounded-lg p-8 flex flex-col relative shadow-2xl">
+                        <div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-sm font-bold px-4 py-1 rounded-full uppercase" data-key="plan2Popular">Más Popular</div>
+                        <h3 data-key="plan2Title" class="text-2xl font-bold mb-2">M-Fit Transformation</h3>
+                        <p data-key="plan2For" class="text-gray-500 dark:text-gray-400 mb-6">Resultados notables con seguimiento cercano.</p>
+                        <p class="text-5xl font-black mb-6">$349<span class="text-lg font-semibold text-gray-500 dark:text-gray-400">.99<span data-key="perMonth">/mes</span></span></p>
+                        <ul class="text-left space-y-4 mb-8 flex-grow">
+                           <li data-key="plan2Feat1" class="flex items-center font-bold"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Todo lo del plan Kickstart, y:</li>
+                           <li data-key="plan2Feat2" class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Soporte por chat (WhatsApp)</li>
+                           <li data-key="plan2Feat3" class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Revisión semanal en video</li>
+                           <li data-key="plan2Feat4" class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Ajustes al plan en tiempo real</li>
+                        </ul>
+                        <a href="https://calendly.com/frankmercadofit/sesion-estrategia" target="_blank" data-key="planButton" class="mt-auto block w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors shadow-lg">Empezar Ahora</a>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-lg p-8 flex flex-col">
+                        <h3 data-key="plan3Title" class="text-2xl font-bold mb-2">M-Fit Premium</h3>
+                        <p data-key="plan3For" class="text-gray-500 dark:text-gray-400 mb-6">El servicio más exclusivo y con todo incluido.</p>
+                        <p class="text-5xl font-black mb-6">$599<span class="text-lg font-semibold text-gray-500 dark:text-gray-400">.99<span data-key="perMonth">/mes</span></span></p>
+                        <ul class="text-left space-y-4 mb-8 flex-grow">
+                            <li data-key="plan3Feat1" class="flex items-center font-bold"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Todo lo del plan Transformation, y:</li>
+                            <li data-key="plan3Feat2" class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>2 videollamadas al mes (30 min)</li>
+                            <li data-key="plan3Feat3" class="flex items-center"><svg class="w-5 h-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>Soporte por chat prioritario</li>
+                        </ul>
+                         <a href="https://calendly.com/frankmercadofit/sesion-estrategia" target="_blank" data-key="planButton" class="mt-auto block w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-3 px-6 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Empezar Ahora</a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+             <p data-key="footerConnect" class="mb-4">Conéctate conmigo</p>
+            <div class="flex justify-center items-center space-x-6 mb-6">
+                <a href="https://x.com/FrankMercadoFit" target="_blank" class="text-gray-300 hover:text-white transition-colors duration-300">
+                    <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+                </a>
+                <a href="https://www.instagram.com/frankmercadofit/" target="_blank" class="text-gray-300 hover:text-white transition-colors duration-300">
+                    <svg class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163m0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98C15.667 0 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"></path></svg>
+                </a>
+            </div>
+            <p data-key="footerRights" class="text-sm text-gray-400">&copy; <span id="year"></span> Frank Mercado Fit. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+     <a href="https://wa.me/573044301112" target="_blank" class="fixed bottom-5 right-5 z-50 transition-transform duration-300 hover:scale-110">
+        <img src="./images/whatsapp-logo.png" alt="Contactar por WhatsApp" class="w-16 h-16">
+    </a>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        var swiper = new Swiper('.swiper-container', {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+            },
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+        });
+
+        // --- Language & Theme Script ---
+        const translations = {
+            en: {
+                navPlanes: "Plans",
+                testimonialsTitle: "Real Results, Transformed Lives",
+                testimonialsSubtitle: "You don't have to take our word for it. Listen to those who have already walked this path.",
+                testimonial1Text: `"Frank changed my perspective on fitness. His plan was easy to follow and the results have been incredible. I recommend him 100%!"`,
+                testimonial2Text: `"The best coach! He is always willing to help and motivate you. Thanks to him, I have achieved goals I thought were impossible."`,
+                testimonial3Text: `"The M-Fit System is just what I needed. A realistic and effective program. I have learned to eat better and train smarter."`,
+                testimonial4Text: `"I never thought I could achieve so much. Frank's constant support was key. I feel stronger and more energetic than ever!"`,
+                plansTitle: "Choose the Perfect Plan for You",
+                plansSubtitle: "All plans are 100% personalized and designed to guarantee results.",
+                plan1Title: "M-Fit Kickstart",
+                plan1For: "For an initial boost with expert guidance.",
+                plan1Feat1: "Personalized training plan",
+                plan1Feat2: "Nutrition plan and macros",
+                plan1Feat3: "Weekly check-in via email",
+                plan2Popular: "Most Popular",
+                plan2Title: "M-Fit Transformation",
+                plan2For: "Noticeable results with close follow-up.",
+                plan2Feat1: "Everything in Kickstart, plus:",
+                plan2Feat2: "Chat support (WhatsApp)",
+                plan2Feat3: "Weekly video review",
+                plan2Feat4: "Real-time plan adjustments",
+                plan3Title: "M-Fit Premium",
+                plan3For: "The most exclusive, all-inclusive service.",
+                plan3Feat1: "Everything in Transformation, plus:",
+                plan3Feat2: "2 video calls per month (30 min)",
+                plan3Feat3: "Priority chat support",
+                planButton: "Get Started Now",
+                footerConnect: "Connect with me",
+                footerRights: `&copy; ${new Date().getFullYear()} Frank Mercado Fit. All rights reserved.`,
+                perMonth: "/month",
+                langSpanish: "Spanish",
+                langEnglish: "English",
+            },
+            es: {
+                navPlanes: "Planes",
+                testimonialsTitle: "Resultados Reales, Vidas Transformadas",
+                testimonialsSubtitle: "No tienes que creernos a nosotros. Escucha a quienes ya han recorrido este camino.",
+                testimonial1Text: `"Frank cambió mi perspectiva sobre el fitness. Su plan fue fácil de seguir y los resultados han sido increíbles. ¡Lo recomiendo al 100%!"`,
+                testimonial2Text: `"¡El mejor coach! Siempre está dispuesto a ayudar y a motivarte. Gracias a él, he logrado metas que creía imposibles."`,
+                testimonial3Text: `"El Sistema M-Fit es justo lo que necesitaba. Un programa realista y efectivo. He aprendido a comer mejor y a entrenar de forma inteligente."`,
+                testimonial4Text: `"Nunca pensé que podría lograr tanto. El apoyo constante de Frank fue clave. ¡Me siento más fuerte y con más energía que nunca!"`,
+                plansTitle: "Elige el Plan Perfecto Para Ti",
+                plansSubtitle: "Todos los planes son 100% personalizados y diseñados para garantizar resultados.",
+                plan1Title: "M-Fit Kickstart",
+                plan1For: "Para un impulso inicial con guía experta.",
+                plan1Feat1: "Plan de entrenamiento personalizado",
+                plan1Feat2: "Plan de nutrición y macros",
+                plan1Feat3: "Check-in semanal vía email",
+                plan2Popular: "Más Popular",
+                plan2Title: "M-Fit Transformation",
+                plan2For: "Resultados notables con seguimiento cercano.",
+                plan2Feat1: "Todo lo del plan Kickstart, y:",
+                plan2Feat2: "Soporte por chat (WhatsApp)",
+                plan2Feat3: "Revisión semanal en video",
+                plan2Feat4: "Ajustes al plan en tiempo real",
+                plan3Title: "M-Fit Premium",
+                plan3For: "El servicio más exclusivo y con todo incluido.",
+                plan3Feat1: "Todo lo del plan Transformation, y:",
+                plan3Feat2: "2 videollamadas al mes (30 min)",
+                plan3Feat3: "Soporte por chat prioritario",
+                planButton: "Empezar Ahora",
+                footerConnect: "Conéctate conmigo",
+                footerRights: `&copy; ${new Date().getFullYear()} Frank Mercado Fit. Todos los derechos reservados.`,
+                perMonth: "/mes",
+                langSpanish: "Español",
+                langEnglish: "Inglés",
+            }
+        };
+
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        const langEsDropdown = document.getElementById('lang-es-dropdown');
+        const langEnDropdown = document.getElementById('lang-en-dropdown');
+        const currentLangBtn = document.getElementById('current-lang-btn');
+
+        const toggleTheme = () => {
+            document.documentElement.classList.toggle('dark');
+            const isDarkMode = document.documentElement.classList.contains('dark');
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+            updateThemeIcons(isDarkMode);
+        };
+
+        const updateThemeIcons = (isDarkMode) => {
+            themeToggleDarkIcon.classList.toggle('hidden', isDarkMode);
+            themeToggleLightIcon.classList.toggle('hidden', !isDarkMode);
+        };
+
+        const flagSVGs = {
+            es: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rounded-sm" viewBox="0 0 3 2"><path fill="#FCDD09" d="M0 0h3v2H0z"/><path fill="#DA121A" d="M0 0h3v.5H0zm0 1.5h3V2H0z"/></svg>`,
+            en: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rounded-sm" viewBox="0 0 60 30" ><clipPath id="s"><path d="M0 0v30h60V0z"/></clipPath><clipPath id="t"><path d="M30 15h30v15zv15h-30zh-30v-15zv-15h30z"/></clipPath><g clip-path="url(#s)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" clip-path="url(#t)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg>`
+        };
+
+        const setLanguage = (lang) => {
+            document.documentElement.lang = lang;
+            localStorage.setItem('language', lang);
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+            currentLangBtn.innerHTML = flagSVGs[lang];
+        };
+        
+        themeToggleBtn.addEventListener('click', toggleTheme);
+        langEsDropdown.addEventListener('click', (e) => { e.preventDefault(); setLanguage('es'); });
+        langEnDropdown.addEventListener('click', (e) => { e.preventDefault(); setLanguage('en'); });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const isDarkMode = document.documentElement.classList.contains('dark');
+            updateThemeIcons(isDarkMode);
+            const savedLang = localStorage.getItem('language') || (navigator.language.split('-')[0] === 'en' ? 'en' : 'es');
+            setLanguage(savedLang);
+        });
+    </script>
+
+</body>
+</html>
+

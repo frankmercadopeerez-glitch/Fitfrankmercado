@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth"> <!-- Default language 'en' -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Plan - Frank Mercado Fit</title>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Script para Modo Noche/Día y configuración de Tailwind -->
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        tailwind.config = {
+          darkMode: 'class',
+        }
+    </script>
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+
+    <!-- ===== SECCIÓN DE NAVEGACIÓN ===== -->
+    <header class="bg-white dark:bg-gray-900 sticky top-0 z-50 shadow-md">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="../index.html" class="text-2xl font-bold text-gray-900 dark:text-white" data-key="nav_logo">
+                Frank Mercado <span class="text-blue-600 dark:text-blue-500">Fit</span>
+            </a>
+
+            <!-- Botones de Idioma y Tema -->
+            <div class="flex items-center space-x-3">
+                <!-- Selector de Idioma (estilo texto simple) -->
+                <div class="flex items-center space-x-2 text-sm font-medium">
+                    <button id="lang-es-btn" class="text-gray-900 dark:text-white opacity-50 hover:opacity-100" data-lang="es">ES</button>
+                    <span class="text-gray-300 dark:text-gray-600">|</span>
+                    <button id="lang-en-btn" class="text-gray-900 dark:text-white opacity-50 hover:opacity-100" data-lang="en">EN</button>
+                </div>
+                <!-- FIX: Botón Tema Noche/Día (sin círculo) -->
+                <button id="theme-toggle-btn" class="flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <!-- Icono se insertará por JS -->
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ===== SECCIÓN HERO (PORTADA) ===== -->
+    <main>
+        <section class="container mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
+            <!-- Columna de Texto -->
+            <div class="text-center md:text-left">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
+                    <span data-key="hero_title_1">Take the First Step,</span>
+                    <span class="block text-blue-600 dark:text-blue-500" data-key="hero_title_2">Completely Free.</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8" data-key="hero_subtitle">
+                    Get a free, personalized starter plan. Answer a few questions, and I'll send you a guide to begin your transformation.
+                </p>
+                <a href="formulario.html" class="inline-block bg-orange-500 hover:bg-orange-600 text-white text-lg font-bold py-4 px-10 rounded-lg shadow-lg transition-transform transform hover:scale-105" data-key="hero_cta">
+                    Get My Free Plan!
+                </a>
+                <p class="mt-4 text-sm text-gray-500" data-key="hero_cta_subtext">No cost. No commitment.</p>
+            </div>
+            
+            <!-- Columna de Imagen -->
+            <div class="flex justify-center">
+                <img src="../images/profile-frank.jpg" alt="Frank Mercado Coach" class="rounded-lg shadow-2xl w-full max-w-md object-cover" onerror="this.src='https://placehold.co/600x400/e2e8f0/4a5568?text=Frank+Mercado'; this.onerror=null;">
+            </div>
+        </section>
+
+        <!-- ===== SECCIÓN QUÉ INCLUYE (VALOR GRATUITO) ===== -->
+        <section id="what-you-get" class="bg-gray-50 dark:bg-gray-800 py-16 md:py-24">
+            <!-- ... (contenido sin cambios) ... -->
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12" data-key="plan_title">
+                    What does your <span class="text-blue-600 dark:text-blue-500">Free Plan</span> include?
+                </h2>
+                <div class="max-w-4xl mx-auto grid md:grid-cols-3 gap-8 text-center">
+                    <!-- Feature 1 -->
+                    <div class="flex flex-col items-center">
+                        <svg class="h-12 w-12 text-blue-600 dark:text-blue-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <h3 class="text-xl font-bold mb-2" data-key="plan_f1_title">Initial Assessment</h3>
+                        <p class="text-gray-600 dark:text-gray-300" data-key="plan_f1_desc">I will analyze your form responses to understand your starting point.</p>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div class="flex flex-col items-center">
+                        <svg class="h-12 w-12 text-blue-600 dark:text-blue-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        <h3 class="text-xl font-bold mb-2" data-key="plan_f2_title">Nutrition Tips</h3>
+                        <p class="text-gray-600 dark:text-gray-300" data-key="plan_f2_desc">You will receive key nutrition tips to start seeing changes.</p>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="flex flex-col items-center">
+                        <svg class="h-12 w-12 text-blue-600 dark:text-blue-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <h3 class="text-xl font-bold mb-2" data-key="plan_f3_title">Initial Action Plan</h3>
+                        <p class="text-gray-600 dark:text-gray-300" data-key="plan_f3_desc">A simple guide with the first steps to follow to activate your metabolism.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECCIÓN DE RESULTADOS (PRUEBA SOCIAL) ===== -->
+        <section id="results" class="py-16 md:py-24">
+            <!-- ... (contenido sin cambios) ... -->
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12" data-key="results_title">
+                    They also started with the first step
+                </h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <img src="../images/transformacion1.jpg" alt="Transformation 1" class="rounded-lg shadow-lg w-full h-80 object-cover" onerror="this.src='https://placehold.co/600x400/e2e8f0/4a5568?text=Result+1'; this.onerror=null;">
+                    <img src="../images/transformacion2.jpg" alt="Transformation 2" class="rounded-lg shadow-lg w-full h-80 object-cover" onerror="this.src='https://placehold.co/600x400/e2e8f0/4a5568?text=Result+2'; this.onerror=null;">
+                    <img src="../images/transformacion3.jpg" alt="Transformation 3" class="rounded-lg shadow-lg w-full h-80 object-cover" onerror="this.src='https.placehold.co/600x400/e2e8f0/4a5568?text=Result+3'; this.onerror=null;">
+                    <img src="../images/transformacion4.jpg" alt="Transformation 4" class="rounded-lg shadow-lg w-full h-80 object-cover" onerror="this.src='https.placehold.co/600x400/e2e8f0/4a5568?text=Result+4'; this.onerror=null;">
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SECCIÓN CTA FINAL ===== -->
+        <section id="final-cta" class="bg-orange-500 dark:bg-orange-600 text-white">
+            <!-- ... (contenido sin cambios) ... -->
+            <div class="container mx-auto px-6 py-16 md:py-24 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6" data-key="cta_title">
+                    Ready for Your Own Transformation?
+                </h2>
+                <p class="text-lg md:text-xl opacity-90 mb-8 max-w-2xl mx-auto" data-key="cta_subtitle">
+                    The form will only take 5 minutes. It's your first investment (of time) in a change that will last a lifetime.
+                </p>
+                <a href="formulario.html" class="inline-block bg-white hover:bg-gray-100 text-orange-600 text-lg font-bold py-4 px-10 rounded-lg shadow-lg transition-transform transform hover:scale-105" data-key="cta_button">
+                    Yes, I Want My Free Plan!
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== SECCIÓN DE FOOTER ===== -->
+    <footer class="bg-gray-800 dark:bg-gray-900 text-gray-300 py-12">
+        <!-- ... (contenido sin cambios) ... -->
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-2xl font-bold text-white mb-4" data-key="footer_title">Connect With Me</h3>
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="https://instagram.com/tu-usuario" target="_blank" rel="noopener noreferrer" class="hover:opacity-75">
+                    <img src="../images/instagram-logo.png" alt="Instagram" class="h-8 w-8">
+                </a>
+                <a href="https://facebook.com/tu-usuario" target="_blank" rel="noopener noreferrer" class="hover:opacity-75">
+                    <img src="../images/logo-facebook.png" alt="Facebook" class="h-8 w-8">
+                </a>
+                <a href="https://x.com/tu-usuario" target="_blank" rel="noopener noreferrer" class="hover:opacity-75">
+                    <img src="../images/X.png" alt="X (Twitter)" class="h-8 w-8">
+                </a>
+                <a href="https://wa.me/573044301112" target="_blank" rel="noopener noreferrer" class="hover:opacity-75">
+                    <img src="../images/whatsapp-logo.png" alt="WhatsApp" class="h-8 w-8" onerror="this.src='https://placehold.co/32x32/25D366/FFFFFF?text=W'; this.onerror=null;">
+                </a>
+            </div>
+
+            <div class="flex justify-center space-x-4 mb-8">
+                <a href="../politica-privacidad.html" class="text-sm hover:underline" data-key="footer_privacy">Privacy Policy</a>
+                <a href="../terminos-condiciones.html" class="text-sm hover:underline" data-key="footer_terms">Terms & Conditions</a>
+            </div>
+
+            <p class="text-sm text-gray-400" data-key="footer_copy">
+                &copy; <span id="current-year"></span> Frank Mercado Fit. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        // --- Traducciones ---
+        const translations = {
+            'es': {
+                'nav_logo': 'Frank Mercado <span class="text-blue-600 dark:text-blue-500">Fit</span>',
+                'hero_title_1': 'Da el Primer Paso',
+                'hero_title_2': 'Totalmente Gratis.',
+                'hero_subtitle': 'Obtén un plan de inicio gratuito y personalizado. Responde unas preguntas y te enviaré una guía para empezar tu transformación.',
+                'hero_cta': '¡Obtener Mi Plan Gratis!',
+                'hero_cta_subtext': 'Sin costo. Sin compromiso.',
+                'plan_title': '¿Qué incluye tu <span class="text-blue-600 dark:text-blue-500">Plan Gratuito</span>?',
+                'plan_f1_title': 'Evaluación Inicial',
+                'plan_f1_desc': 'Analizaré tus respuestas del formulario para entender tu punto de partida.',
+                'plan_f2_title': 'Tips de Nutrición',
+                'plan_f2_desc': 'Recibirás los consejos clave de nutrición para empezar a ver cambios.',
+                'plan_f3_title': 'Plan de Acción Inicial',
+                'plan_f3_desc': 'Una guía simple con los primeros pasos a seguir para activar tu metabolismo.',
+                'results_title': 'Ellos también empezaron con el primer paso',
+                'cta_title': '¿Listo para tu Propia Transformación?',
+                'cta_subtitle': 'El formulario te tomará solo 5 minutos. Es tu primera inversión (de tiempo) en un cambio que durará toda la vida.',
+                'cta_button': '¡Sí, Quiero Mi Plan Gratis!',
+                'footer_title': 'Conéctate Conmigo',
+                'footer_privacy': 'Política de Privacidad',
+                'footer_terms': 'Términos y Condiciones',
+                'footer_copy': '&copy; <span id="current-year"></span> Frank Mercado Fit. Todos los derechos reservados.'
+            },
+            'en': {
+                'nav_logo': 'Frank Mercado <span class="text-blue-600 dark:text-blue-500">Fit</span>',
+                'hero_title_1': 'Take the First Step,',
+                'hero_title_2': 'Completely Free.',
+                'hero_subtitle': 'Get a free, personalized starter plan. Answer a few questions, and I\'ll send you a guide to begin your transformation.',
+                'hero_cta': 'Get My Free Plan!',
+                'hero_cta_subtext': 'No cost. No commitment.',
+                'plan_title': 'What does your <span class="text-blue-600 dark:text-blue-500">Free Plan</span> include?',
+                'plan_f1_title': 'Initial Assessment',
+                'plan_f1_desc': 'I will analyze your form responses to understand your starting point.',
+                'plan_f2_title': 'Nutrition Tips',
+                'plan_f2_desc': 'You will receive key nutrition tips to start seeing changes.',
+                'plan_f3_title': 'Initial Action Plan',
+                'plan_f3_desc': 'A simple guide with the first steps to follow to activate your metabolism.',
+                'results_title': 'They also started with the first step',
+                'cta_title': 'Ready for Your Own Transformation?',
+                'cta_subtitle': 'The form will only take 5 minutes. It\'s your first investment (of time) in a change that will last a lifetime.',
+                'cta_button': 'Yes, I Want My Free Plan!',
+                'footer_title': 'Connect With Me',
+                'footer_privacy': 'Privacy Policy',
+                'footer_terms': 'Terms & Conditions',
+                'footer_copy': '&copy; <span id="current-year"></span> Frank Mercado Fit. All rights reserved.'
+            }
+        };
+
+        // --- Año del Footer ---
+        document.getElementById('current-year').innerText = new Date().getFullYear();
+
+        // --- Lógica de Tema (Modo Noche/Día) ---
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const iconSun = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M12 7a5 5 0 015 5 5 5 0 01-5 5 5 5 0 01-5-5 5 5 0 015-5z"></path></svg>`;
+        const iconMoon = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9 9 0 008.354-5.646z"></path></svg>`;
+
+        const updateThemeIcons = (isDarkMode) => {
+            themeToggleBtn.innerHTML = isDarkMode ? iconSun : iconMoon;
+        };
+
+        const toggleTheme = () => {
+            const isDarkMode = document.documentElement.classList.toggle('dark');
+            localStorage.theme = isDarkMode ? 'dark' : 'light';
+            updateThemeIcons(isDarkMode);
+        };
+        
+        themeToggleBtn.addEventListener('click', toggleTheme);
+
+        // --- Lógica de Idioma (Texto Simple) ---
+        const langEsBtn = document.getElementById('lang-es-btn');
+        const langEnBtn = document.getElementById('lang-en-btn');
+
+        const setLanguage = (lang) => {
+            document.documentElement.lang = lang;
+            localStorage.setItem('language', lang);
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+            
+            if (lang === 'es') {
+                langEsBtn.classList.remove('opacity-50');
+                langEnBtn.classList.add('opacity-50');
+            } else {
+                langEnBtn.classList.remove('opacity-50');
+                langEsBtn.classList.add('opacity-50');
+            }
+        };
+
+        langEsBtn.addEventListener('click', (e) => { e.preventDefault(); setLanguage('es'); });
+        langEnBtn.addEventListener('click', (e) => { e.preventDefault(); setLanguage('en'); });
+        
+        // --- Inicialización al Cargar ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const isDarkMode = document.documentElement.classList.contains('dark');
+            updateThemeIcons(isDarkMode);
+            
+            const savedLang = localStorage.getItem('language');
+            const browserLang = navigator.language.split('-')[0];
+            const defaultLang = savedLang || (browserLang === 'es' ? 'es' : 'en');
+            setLanguage(defaultLang);
+        });
+
+    </script>
+</body>
+</html>
+
+

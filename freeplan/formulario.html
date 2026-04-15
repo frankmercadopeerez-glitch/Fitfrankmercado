@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth"> <!-- FIX: De vuelto a 'es' como default -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario M-Fit™ - Frank Mercado Fit</title>
+    <!-- FIX: Favicon original del formulario -->
+    <link rel="icon" type="image/png" href="../images/favicon-circular.png"> 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Librería para el selector de país (intl-tel-input) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
+    
+    <!-- Script para Modo Noche/Día y configuración de Tailwind -->
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        tailwind.config = {
+          darkMode: 'class',
+        }
+    </script>
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .form-input, .form-textarea, .custom-select-trigger {
+            transition: all 0.2s ease-in-out;
+        }
+        .form-textarea { resize: none; }
+        .form-input:focus, .form-textarea:focus, .custom-select-wrapper.open .custom-select-trigger {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+            border-color: #3b82f6;
+        }
+        .dark .form-input:focus, .dark .form-textarea:focus, .dark .custom-select-wrapper.open .custom-select-trigger {
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.5);
+            border-color: #60a5fa;
+        }
+        /* Estilos para radios de escala 1-10 */
+        .scale-10-label {
+            min-width: 2rem; height: 2rem; cursor: pointer; border: 1px solid #d1d5db;
+            transition: all 0.2s ease-in-out;
+        }
+        .dark .scale-10-label { border-color: #4b5563; }
+        .scale-10-input:checked + .scale-10-label {
+            background-color: #3b82f6; color: white; border-color: #3b82f6;
+        }
+        /* Estilos de Validación */
+        .error-message { display: none; }
+        .form-group.error .error-message { display: block; }
+        .form-group.error .form-input,
+        .form-group.error .form-textarea,
+        .form-group.error .custom-select-trigger,
+        .form-group.error .iti__selected-flag {
+            border-color: #ef4444; /* red-500 */
+        }
+        .form-group.error .scale-10-label { border-color: #ef4444; }
+
+        /* Estilos para menús desplegables personalizados */
+        .custom-select-wrapper { position: relative; }
+        .custom-select-trigger {
+            position: relative; display: flex; align-items: center; justify-content: space-between;
+            padding: 0.75rem 1rem; font-size: 1rem; font-weight: 500; border-radius: 0.5rem;
+            cursor: pointer; user-select: none;
+            background-color: #fff; border: 1px solid #d1d5db;
+        }
+        .dark .custom-select-trigger { background-color: #374151; border-color: #4b5563; }
+        .custom-select-trigger::after {
+            content: ''; display: block; width: 0.5rem; height: 0.5rem;
+            border-right: 2px solid #6b7280; border-bottom: 2px solid #6b7280;
+            transform: translateY(-25%) rotate(45deg); transition: transform 0.2s ease-in-out;
+        }
+        .dark .custom-select-trigger::after { border-color: #9ca3af; }
+        .custom-select-wrapper.open .custom-select-trigger::after { transform: translateY(0%) rotate(225deg); }
+        .custom-options {
+            position: absolute; top: 100%; left: 0; right: 0; z-index: 10;
+            max-height: 0; opacity: 0; overflow: hidden;
+            background-color: #fff; border: 1px solid #d1d5db;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+        }
+        .dark .custom-options { background-color: #1f2937; border-color: #4b5563; }
+        .custom-select-wrapper.open .custom-options { max-height: 200px; opacity: 1; overflow-y: auto; }
+        .custom-option { padding: 0.75rem 1rem; cursor: pointer; }
+        .custom-option:hover { background-color: #f3f4f6; }
+        .dark .custom-option:hover { background-color: #374151; }
+        .custom-option.selected { font-weight: 600; background-color: #dbeafe; }
+        .dark .custom-option.selected { background-color: #3b82f6; }
+        .hidden-select { display: none; }
+
+        /* Estilos para el selector de país (intl-tel-input) */
+        .iti { width: 100%; }
+        .iti__tel-input { padding-left: 58px !important; }
+        .dark .iti__country-list {
+            background-color: #1f2937; border: 1px solid #4b5563; color: #d1d5db;
+        }
+        .dark .iti__country { color: #d1d5db; }
+        .dark .iti__country:hover, .dark .iti__active { background-color: #374151; }
+        .dark .iti__dial-code { color: #9ca3af; }
+        .iti--separate-dial-code .iti__selected-dial-code { display: none; }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+
+    <header class="bg-white dark:bg-gray-800 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="../index.html" class="text-2xl font-bold text-gray-900 dark:text-white" data-key="nav_logo">
+                Frank Mercado <span class="text-blue-600 dark:text-blue-500">Fit</span>
+            </a>
+            <div class="flex items-center space-x-3">
+                
+                <!-- FIX: Selector de Idioma (Texto Simple) -->
+                <div class="flex items-center space-x-2 text-sm font-medium">
+                    <button id="lang-es-btn" class="text-gray-900 dark:text-white opacity-50 hover:opacity-100" data-lang="es">ES</button>
+                    <span class="text-gray-300 dark:text-gray-600">|</span>
+                    <button id="lang-en-btn" class="text-gray-900 dark:text-white opacity-50 hover:opacity-100" data-lang="en">EN</button>
+                </div>
+
+                 <!-- FIX: Botón Modo Noche/Día (sin círculo) -->
+                <button id="theme-toggle-btn" class="flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <!-- Icono se insertará por JS -->
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="py-12 md:py-20">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-lg">
+                <h1 class="text-3xl md:text-4xl font-black text-center mb-2 text-gray-900 dark:text-white" data-key="formTitle">Fitness Assessment Questionnaire</h1>
+                <p class="text-gray-600 dark:text-gray-300 text-center mb-4" data-key="formWelcome">Welcome! You are one step away from receiving your personalized plan. The following questions are essential to design a M-Fit™ System 100% adapted to you.</p>
+                <p class="text-sm text-center text-gray-500 dark:text-gray-400 mb-8" data-key="formRequired">Questions with <span class="text-red-500 font-bold">*</span> are required.</p>
+                
+                <form id="mfit-form" method="POST" action="https://formspree.io/f/xblzowrj" novalidate>
+                    
+                    <input type="hidden" name="_next" value="https://fit.frankmercado.com/success">
+
+                    <div class="space-y-10">
+                        <!-- SECCIÓN 1: Información Básica y Objetivos -->
+                        <div>
+                            <h2 class="text-xl font-bold border-b border-gray-200 dark:border-gray-700 pb-2 mb-6 text-gray-900 dark:text-white" data-key="s1Title">Section 1: Basic Information and Goals</h2>
+                            <div class="space-y-6">
+                                <div class="form-group">
+                                    <label for="nombre_completo" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"><span data-key="s1f1">Full Name:</span> <span class="text-red-500">*</span></label>
+                                    <input type="text" name="nombre_completo" id="nombre_completo" class="form-input w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" required>
+                                    <span class="text-red-500 text-sm error-message" data-key="errorMsg">This field is required.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"><span data-key="s1f2">Your Best Email Address:</span> <span class="text-red-500">*</span></label>
+                                    <input type="email" name="email" id="email" class="form-input w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" required>
+                                    <span class="text-red-500 text-sm error-message" data-key="errorMsg">This field is required.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="whatsapp" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" data-key="s1f3">WhatsApp Number (Optional):</label>
+                                    <input type="tel" id="whatsapp" class="form-input w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg">
+                                    <input type="hidden" name="whatsapp_completo" id="whatsapp_completo">
+                                </div>
+                                <div class="form-group">
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"><span data-key="s1f4">What is your main goal?</span> <span class="text-red-500">*</span></label>
+                                    <div class="space-y-2">
+                                        <label class="flex items-center"><input type="radio" name="objetivo_principal" value="Perder grasa / Definir" class="mr-2" required><span data-key="s1f4o1">Fat Loss / Definition</span></label>
+                                        <label class="flex items-center"><input type="radio" name="objetivo_principal" value="Ganar masa muscular" class="mr-2"><span data-key="s1f4o2">Gain muscle mass</span></label>
+                                        <label class="flex items-center"><input type="radio" name="objetivo_principal" value="Recomposición Corporal" class="mr-2"><span data-key="s1f4o3">Body Recomposition</span></label>
+                                        <label class="flex items-center"><input type="radio" name="objetivo_principal" value="Mejorar salud y hábitos" class="mr-2"><span data-key="s1f4o4">Improve my overall health and habits</span></label>
+                                        <label class="flex items-center"><input type="radio" name="objetivo_principal" value="Otro" class="mr-2"><span data-key="s1f4o5">Other</span></label>
+                                    </div>
+                                    <span class="text-red-500 text-sm error-message" data-key="errorMsg">This field is required.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"><span data-key="s1f5">From 1 to 10, how committed do you feel to start NOW?</span> <span class="text-red-500">*</span></label>
+                                    <div class="flex flex-wrap gap-2">
+                                        <input type="radio" id="comp1" name="compromiso" value="1" class="sr-only scale-10-input" required><label for="comp1" class="scale-10-label flex items-center justify-center rounded-md font-bold">1</label>
+                                        <input type="radio" id="comp2" name="compromiso" value="2" class="sr-only scale-10-input"><label for="comp2" class="scale-10-label flex items-center justify-center rounded-md font-bold">2</label>
+                                        <input type="radio" id="comp3" name="compromiso" value="3" class="sr-only scale-10-input"><label for="comp3" class="scale-10-label flex items-center justify-center rounded-md font-bold">3</label>
+                                        <input type="radio" id="comp4" name="compromiso" value="4" class="sr-only scale-10-input"><label for="comp4" class="scale-10-label flex items-center justify-center rounded-md font-bold">4</label>
+                                        <input type="radio" id="comp5" name="compromiso" value="5" class="sr-only scale-10-input"><label for="comp5" class="scale-10-label flex items-center justify-center rounded-md font-bold">5</label>
+                                        <input type="radio" id="comp6" name="compromiso" value="6" class="sr-only scale-10-input"><label for="comp6" class="scale-10-label flex items-center justify-center rounded-md font-bold">6</label>
+                                        <input type="radio" id="comp7" name="compromiso" value="7" class="sr-only scale-10-input"><label for="comp7" class="scale-10-label flex items-center justify-center rounded-md font-bold">7</label>
+                                        <input type="radio" id="comp8" name="compromiso" value="8" class="sr-only scale-10-input"><label for="comp8" class="scale-10-label flex items-center justify-center rounded-md font-bold">8</label>
+                                        <input type="radio" id="comp9" name="compromiso" value="9" class="sr-only scale-10-input"><label for="comp9" class="scale-10-label flex items-center justify-center rounded-md font-bold">9</label>
+                                        <input type="radio" id="comp10" name="compromiso" value="10" class="sr-only scale-10-input"><label for="comp10" class="scale-10-label flex items-center justify-center rounded-md font-bold">10</label>
+                                    </div>
+                                    <span class="text-red-500 text-sm error-message" data-key="errorMsg">This field is required.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="porque_objetivo" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" data-key="s1f6">Briefly describe why you want to achieve this goal:</label>
+                                    <textarea name="porque_objetivo" id="porque_objetivo" rows="3" class="form-textarea w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" data-key-placeholder="s1f6p"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN 2: Tu Punto de Partida -->
+                        <div>
+                             <h2 class="text-xl font-bold border-b border-gray-200 dark:border-gray-700 pb-2 mb-6 text-gray-900 dark:text-white" data-key="s2Title">Section 2: Your Starting Point</h2>
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label for="edad" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"><span data-key="s2f1">Age:</span> <span class="text-red-500">*</span></label>
+                                    <input type="number" name="edad" id="edad" class="form-input w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" required>
+                                    <span class="text-red-500 text-sm error-message" data-key="errorMsg">This field is required.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"><span data-key="s2f2">Biological Sex:</span> <span class="text-red-500">*</span></label>
+                                    <div class="custom-select-wrapper">
+                                        <select name="sexo_biologico" class="hidden-select" required>
+                                            <option value=""></option>
+                                            <option value="Masculino" data-key="generoMasc">Male</option>
+                                            <option value="Femenino" data-key="generoFem">Female</option>
+                                        </select>
+                                    </div>
+                                    <span class="text-red-500 text-sm error-message" data-key="errorMsg">This field is required.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="estatura" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"><span data-key="s2f3">Height (cm):</span> <span class="text-red-500">*</span></label>
+                                    <input type="text" inputmode="decimal" name="altura_cm" id="estatura" class="form-input w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" required>
+                                     <span class="text-red-500 text-sm error-message" data-key="errorMsg">This field is required.</span>
+                                </div>
+                               <div class="form-group">
+                                    <label for="peso" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"><span data-key="s2f4">Current Weight (kg):</span> <span class="text-red-500">*</span></label>
+                                    <input type="text" inputmode="decimal" name="peso_kg" id="peso" class="form-input w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" required>
+                                    <span class="text-red-500 text-sm error-message" data-key="errorMsg">This field is required.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="peso_deseado" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" data-key="s2f5">Goal Weight (kg):</label>
+                                    <input type="text" inputmode="decimal" name="peso_deseado_kg" id="peso_deseado" class="form-input w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cintura" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" data-key="s2f6">Waist Measurement (cm, Optional):</label>
+                                    <input type="text" inputmode="decimal" name="cintura_cm" id="cintura" class="form-input w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- SECCIÓN 3: Tu Estilo de Vida -->
+                        <div>
+                            <h2 class="text-xl font-bold border-b border-gray-200 dark:border-gray-700 pb-2 mb-6 text-gray-900 dark:text-white" data-key="s3Title">Section 3: Your Lifestyle</h2>
+                            <div class="space-y-6">
+                                <div class="form-group">
+                                    <label for="ocupacion" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" data-key="s3f1">Briefly describe your occupation:</label>
+                                    <input type="text" name="ocupacion" id="ocupacion" class="form-input w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg">
+                                </div>
+                                <div class="form-group">
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"><span data-key="s3f2">DAILY activity level (not including exercise):</span> <span class="text-red-500">*</span></label>
+                                    <div class="space-y-2">
+                                        <label class="flex items-center"><input type="radio" name="actividad_diaria" value="Sedentario" class="mr-2" required><span data-key="s3f2o1">Sedentary (office job, little movement)</span></label>
+                                        <label class="flex items-center"><input type="radio" name="actividad_diaria" value="Ligero" class="mr-2"><span data-key="s3f2o2">Light (occasional walks, standing part of the day)</span></label>
+                                        <label class="flex items-center"><input type="radio" name="actividad_diaria" value="Activo" class="mr-2"><span data-key="s3f2o3">Active (physical job, walk or move a lot)</span></label>
+                                        <label class="flex items-center"><input type="radio" name="actividad_diaria" value="Muy Activo" class="mr-2"><span data-key="s3f2o4">Very Active (intense physical labor, athlete)</span></label>
+                                    </div>
+                                    <span class="text-red-500 text-sm error-message" data-key="errorMsg">This field is required.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" data-key="s3f3">How many hours do you sleep per night on average?</label>
+                                    <div class="custom-select-wrapper">
+                                        <select name="horas_sueno" class="hidden-select">
+                                            <option value=""></option>
+                                            <option value="Menos de 5" data-key="s3f3o1">Less than 5 hours</option>
+                                            <option value="5-6" data-key="s3f3o2">5-6 hours</option>
+                                            <option value="6-7" data-key="s3f3o3">6-7 hours</option>
+                                            <option value="7-8" data-key="s3f3o4">7-8 hours</option>
+                                            <option value="Mas de 8" data-key="s3f3o5">More than 8 hours</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" data-key="s3f4">From 1 to 10, how would you rate your average stress level?</label>
+                                    <div class="flex flex-wrap gap-2">
+                                        <input type="radio" id="estres1" name="nivel_estres" value="1" class="sr-only scale-10-input"><label for="estres1" class="scale-10-label flex items-center justify-center rounded-md font-bold">1</label>
+                                        <input type="radio" id="estres2" name="nivel_estres" value="2" class="sr-only scale-10-input"><label for="estres2" class="scale-10-label flex items-center justify-center rounded-md font-bold">2</label>
+                                        <input type="radio" id="estres3" name="nivel_estres" value="3" class="sr-only scale-10-input"><label for="estres3" class="scale-10-label flex items-center justify-center rounded-md font-bold">3</label>
+                                        <input type="radio" id="estres4" name="nivel_estres" value="4" class="sr-only scale-10-input"><label for="estres4" class="scale-10-label flex items-center justify-center rounded-md font-bold">4</label>
+                                        <input type="radio" id="estres5" name="nivel_estres" value="5" class="sr-only scale-10-input"><label for="estres5" class="scale-10-label flex items-center justify-center rounded-md font-bold">5</label>
+                                        <input type="radio" id="estres6" name="nivel_estres" value="6" class="sr-only scale-10-input"><label for="estres6" class="scale-10-label flex items-center justify-center rounded-md font-bold">6</label>
+                                        <input type="radio" id="estres7" name="nivel_estres" value="7" class="sr-only scale-10-input"><label for="estres7" class="scale-10-label flex items-center justify-center rounded-md font-bold">7</label>
+                                        <input type="radio" id="estres8" name="nivel_estres" value="8" class="sr-only scale-10-input"><label for="estres8" class="scale-10-label flex items-center justify-center rounded-md font-bold">8</label>
+                                        <input type="radio" id="estres9" name="nivel_estres" value="9" class="sr-only scale-10-input"><label for="estres9" class="scale-10-label flex items-center justify-center rounded-md font-bold">9</label>
+                                        <input type="radio" id="estres10" name="nivel_estres" value="10" class="sr-only scale-10-input"><label for="estres10" class="scale-10-label flex items-center justify-center rounded-md font-bold">10</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN 4: Hábitos de Nutrición -->
+                        <div>
+                            <h2 class="text-xl font-bold border-b border-gray-200 dark:border-gray-700 pb-2 mb-6 text-gray-900 dark:text-white" data-key="s4Title">Section 4: Nutrition Habits</h2>
+                            <div class="space-y-6">
+                                <div class="form-group">
+                                    <label for="alergias" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"><span data-key="s4f1">Do you have any relevant allergies, intolerances, or medical conditions?</span> <span class="text-red-500">*</span></label>
+                                    <input type="text" name="alergias_condiciones" id="alergias" class="form-input w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" required data-key-placeholder="s4f1p">
+                                    <span class="text-red-500 text-sm error-message" data-key="errorMsg">This field is required.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" data-key="s4f2">Do you follow any dietary preferences?</label>
+                                    <div class="space-y-2">
+                                        <label class="flex items-center"><input type="radio" name="dieta_preferencia" value="Ninguna" class="mr-2"><span data-key="s4f2o1">None</span></label>
+                                        <label class="flex items-center"><input type="radio" name="dieta_preferencia" value="Vegetariana" class="mr-2"><span data-key="s4f2o2">Vegetarian</span></label>
+                                        <label class="flex items-center"><input type="radio" name="dieta_preferencia" value="Vegana" class="mr-2"><span data-key="s4f2o3">Vegan</span></label>
+                                        <label class="flex items-center"><input type="radio" name="dieta_preferencia" value="Pescetariana" class="mr-2"><span data-key="s4f2o4">Pescatarian</span></label>
+                                        <label class="flex items-center"><input type="radio" name="dieta_preferencia" value="Otro" class="mr-2"><span data-key="s4f2o5">Other</span></label>
+                                    </div>
+                                </div>
+                                 <div class="form-group">
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" data-key="s4f3">How many main meals do you currently eat per day?</label>
+                                    <div class="custom-select-wrapper">
+                                        <select name="numero_comidas" class="hidden-select">
+                                            <option value=""></option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5 o mas" data-key="s4f3o5">5 or more</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"><span data-key="s4f4">Check the food groups you MOST enjoy and usually consume:</span> <span class="text-red-500">*</span></label>
+                                    <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                                        <label class="flex items-center"><input type="checkbox" name="alimentos_favoritos[]" value="Pollo" class="mr-2" required> <span data-key="s4f4o1">Chicken</span></label>
+                                        <label class="flex items-center"><input type="checkbox" name="alimentos_favoritos[]" value="Carne roja" class="mr-2"> <span data-key="s4f4o2">Red meat</span></label>
+                                        <label class="flex items-center"><input type="checkbox" name="alimentos_favoritos[]" value="Pescado" class="mr-2"> <span data-key="s4f4o3">Fish</span></label>
+                                        <label class="flex items-center"><input type="checkbox" name="alimentos_favoritos[]" value="Huevos" class="mr-2"> <span data-key="s4f4o4">Eggs</span></label>
+                                        <label class="flex items-center"><input type="checkbox" name="alimentos_favoritos[]" value="Lácteos" class="mr-2"> <span data-key="s4f4o5">Dairy</span></label>
+                                        <label class="flex items-center"><input type="checkbox" name="alimentos_favoritos[]" value="Legumbres" class="mr-2"> <span data-key="s4f4o6">Legumes</span></label>
+                                        <label class="flex items-center"><input type="checkbox" name="alimentos_favoritos[]" value="Vegetales" class="mr-2"> <span data-key="s4f4o7">Vegetables</span></label>
+                                        <label class="flex items-center"><input type="checkbox" name="alimentos_favoritos[]" value="Frutas" class="mr-2"> <span data-key="s4f4o8">Fruits</span></label>
+                                        <label class="flex items-center"><input type="checkbox" name="alimentos_favoritos[]" value="Grasas saludables" class="mr-2"> <span data-key="s4f4o9">Healthy fats</span></label>
+                                    </div>
+                                    <span class="text-red-500 text-sm error-message" data-key="errorMsg">This field is required.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="alimentos_odiados" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" data-key="s4f5">Are there any foods you HATE?</label>
+                                    <input type="text" name="alimentos_odiados" id="alimentos_odiados" class="form-input w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bebidas" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" data-key="s4f6">What do you usually drink besides water?</label>
+                                    <input type="text" name="otras_bebidas" id="bebidas" class="form-input w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" data-key-placeholder="s4f6p">
+                                </div>
+                                <div class="form-group">
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" data-key="s4f7">Regarding alcohol consumption, which best describes your habit?</label>
+                                     <div class="custom-select-wrapper">
+                                        <select name="consumo_alcohol" class="hidden-select">
+                                            <option value=""></option>
+                                            <option value="No consumo" data-key="s4f7o1">I don't drink</option>
+                                            <option value="Ocasionalmente (1-2 veces al mes)" data-key="s4f7o2">Occasionally (1-2 times a month)</option>
+                                            <option value="Socialmente (fines de semana)" data-key="s4f7o3">Socially (weekends)</option>
+                                            <option value="Frecuentemente (varias veces por semana)" data-key="s4f7o4">Frequently (several times a week)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" data-key="s4f8">How often do you eat out?</label>
+                                     <div class="custom-select-wrapper">
+                                        <select name="comer_fuera" class="hidden-select">
+                                            <option value=""></option>
+                                            <option value="Rara vez (casi nunca)" data-key="s4f8o1">Rarely (almost never)</option>
+                                            <option value="1-2 veces por semana" data-key="s4f8o2">1-2 times a week</option>
+                                            <option value="3-5 veces por semana" data-key="s4f8o3">3-5 times a week</option>
+                                            <option value="Casi a diario" data-key="s4f8o4">Almost daily</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN 5: Experiencia de Entrenamiento -->
+                        <div>
+                             <h2 class="text-xl font-bold border-b border-gray-200 dark:border-gray-700 pb-2 mb-6 text-gray-900 dark:text-white" data-key="s5Title">Section 5: Training Experience</h2>
+                             <div class="space-y-6">
+                                <div class="form-group">
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"><span data-key="s5f1">What is your training experience level?</span> <span class="text-red-500">*</span></label>
+                                    <div class="custom-select-wrapper">
+                                        <select name="experiencia_entrenamiento" class="hidden-select" required>
+                                            <option value=""></option>
+                                            <option value="Principiante" data-key="expOpt1">Beginner (Never trained or very little)</option>
+                                            <option value="Intermedio" data-key="expOpt2">Intermediate (6+ months of consistent training)</option>
+                                            <option value="Avanzado" data-key="expOpt3">Advanced (Years of training)</option>
+                                        </select>
+                                    </div>
+                                    <span class="text-red-500 text-sm error-message" data-key="errorMsg">This field is required.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"><span data-key="s5f2">Where are you going to train?</span> <span class="text-red-500">*</span></label>
+                                    <div class="custom-select-wrapper">
+                                        <select name="lugar_entrenamiento" class="hidden-select" required>
+                                            <option value=""></option>
+                                            <option value="Gimnasio" data-key="s5f2o1">Gym</option>
+                                            <option value="Casa" data-key="s5f2o2">At Home</option>
+                                        </select>
+                                    </div>
+                                    <span class="text-red-500 text-sm error-message" data-key="errorMsg">This field is required.</span>
+                                </div>
+                                 <div class="form-group">
+                                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" data-key="s5f3">If you train at home, what equipment do you have?</label>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <label class="flex items-center"><input type="checkbox" name="equipamiento[]" value="Mancuernas" class="mr-2"><span data-key="s5f3o1">Dumbbells</span></label>
+                                        <label class="flex items-center"><input type="checkbox" name="equipamiento[]" value="Bandas de resistencia" class="mr-2"><span data-key="s5f3o2">Resistance bands</span></label>
+                                        <label class="flex items-center"><input type="checkbox" name="equipamiento[]" value="Kettlebell" class="mr-2"><span data-key="s5f3o3">Kettlebell</span></label>
+                                        <label class="flex items-center"><input type="checkbox" name="equipamiento[]" value="Barra y discos" class="mr-2"><span data-key="s5f3o4">Barbell and plates</span></label>
+                                        <label class="flex items-center"><input type="checkbox" name="equipamiento[]" value="Solo peso corporal" class="mr-2"><span data-key="s5f3o5">Bodyweight only</span></label>
+                                        <label class="flex items-center"><input type="checkbox" name="equipamiento[]" value="Otro" class="mr-2"><span data-key="s5f3o6">Other</span></label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="equipamiento_pesos" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" data-key="s5f4">If you have dumbbells/kettlebells, specify the weights:</label>
+                                    <input type="text" name="equipamiento_pesos" id="equipamiento_pesos" class="form-input w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dias_semana" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"><span data-key="s5f5">How many days a WEEK can you REALLY commit to training?</span> <span class="text-red-500">*</span></label>
+                                    <div class="custom-select-wrapper">
+                                        <select name="dias_por_semana" id="dias_semana" class="hidden-select" required>
+                                            <option value=""></option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                        </select>
+                                    </div>
+                                    <span class="text-red-500 text-sm error-message" data-key="errorMsg">This field is required.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tiempo_sesion" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"><span data-key="s5f6">How much time do you have available PER session?</span> <span class="text-red-500">*</span></label>
+                                    <div class="custom-select-wrapper">
+                                        <select name="tiempo_por_sesion" id="tiempo_sesion" class="hidden-select" required>
+                                            <option value=""></option>
+                                            <option value="30-45 min" data-key="s5f6o1">30-45 minutes</option>
+                                            <option value="45-60 min" data-key="s5f6o2">45-60 minutes</option>
+                                            <option value="60-90 min" data-key="s5f6o3">60-90 minutes</option>
+                                            <option value="90+ min" data-key="s5f6o4">More than 90 minutes</option>
+                                        </select>
+                                    </div>
+                                    <span class="text-red-500 text-sm error-message" data-key="errorMsg">This field is required.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lesiones" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2"><span data-key="s5f7">Do you have any injuries (past or present)?</span> <span class="text-red-500">*</span></label>
+                                    <textarea name="lesiones" id="lesiones" rows="3" class="form-textarea w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" required data-key-placeholder="placeholderLesiones"></textarea>
+                                    <span class="text-red-500 text-sm error-message" data-key="errorMsg">This field is required.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="comentarios_finales" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2" data-key="s5f8">Is there anything else you think I should know?</label>
+                                    <textarea name="comentarios_finales" id="comentarios_finales" rows="3" class="form-textarea w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg" data-key-placeholder="s5f8p"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="mt-10 text-center">
+                        <button type="submit" data-key="btnEnviar" class="w-full md:w-auto inline-block bg-orange-500 text-white font-bold text-lg px-12 py-4 rounded-lg shadow-lg uppercase tracking-wider transition-all duration-300 ease-in-out hover:bg-orange-600 hover:shadow-xl hover:-translate-y-1 transform">
+                            Send My Questionnaire
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12 md:mt-20">
+        <div class="container mx-auto px-6 text-center">
+            <p data-key="footerRights" class="text-sm text-gray-400">&copy; <span id="year"></span> Frank Mercado Fit. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- SCRIPT DE TRADUCCIÓN Y LÓGICA GENERAL ---
+        const translations = {
+            'en': {
+                'nav_logo': 'Frank Mercado <span class="text-blue-600 dark:text-blue-500">Fit</span>',
+                'lang_es': 'Español',
+                'lang_en': 'English',
+                'formTitle': "Fitness Assessment Questionnaire",
+                'formWelcome': "Welcome! You are one step away from receiving your personalized plan. The following questions are essential to design a M-Fit™ System 100% adapted to you.",
+                'formRequired': "Questions with <span class='text-red-500 font-bold'>*</span> are required.",
+                'errorMsg': "This field is required.",
+                'selectOpt': "Select...",
+                's1Title': "Section 1: Basic Information and Goals",
+                's1f1': "Full Name:", 's1f2': "Your Best Email Address:", 's1f3': "WhatsApp Number (Optional):",
+                's1f4': "What is your main goal?", 's1f4o1': "Fat Loss / Definition", 's1f4o2': "Gain muscle mass", 's1f4o3': "Body Recomposition", 's1f4o4': "Improve my overall health and habits", 's1f4o5': "Other",
+                's1f5': "From 1 to 10, how committed do you feel to start NOW?",
+                's1f6': "Briefly describe why you want to achieve this goal:", 's1f6p': "E.g., 'I want to feel more confident'",
+                's2Title': "Section 2: Your Starting Point",
+                's2f1': "Age:", 's2f2': "Biological Sex:", 'generoMasc': "Male", 'generoFem': "Female",
+                's2f3': "Height (cm):", 's2f4': "Current Weight (kg):", 's2f5': "Goal Weight (kg):", 's2f6': "Waist Measurement (cm, Optional):",
+                's3Title': "Section 3: Your Lifestyle",
+                's3f1': "Briefly describe your occupation:",
+                's3f2': "DAILY activity level (not including exercise):", 's3f2o1': "Sedentary (office job, little movement)", 's3f2o2': "Light (occasional walks, standing part of the day)", 's3f2o3': "Active (physical job, walk or move a lot)", 's3f2o4': "Very Active (intense physical labor, athlete)",
+                's3f3': "How many hours do you sleep per night on average?", 's3f3o1': "Less than 5 hours", 's3f3o2': "5-6 hours", 's3f3o3': "6-7 hours", 's3f3o4': "7-8 hours", 's3f3o5': "More than 8 hours",
+                's3f4': "From 1 to 10, how would you rate your average stress level?",
+                's4Title': "Section 4: Nutrition Habits",
+                's4f1': "Do you have any relevant allergies, intolerances, or medical conditions?", 's4f1p': "E.g., Lactose intolerance, nut allergy, etc.",
+                's4f2': "Do you follow any dietary preferences?", 's4f2o1': "None", 's4f2o2': "Vegetarian", 's4f2o3': "Vegan", 's4f2o4': "Pescatarian", 's4f2o5': "Other",
+                's4f3': "How many main meals do you currently eat per day?", 's4f3o5': "5 or more",
+                's4f4': "Check the food groups you MOST enjoy and usually consume:", 's4f4o1': "Chicken", 's4f4o2': "Red meat", 's4f4o3': "Fish", 's4f4o4': "Eggs", 's4f4o5': "Dairy", 's4f4o6': "Legumes", 's4f4o7': "Vegetables", 's4f4o8': "Fruits", 's4f4o9': "Healthy fats",
+                's4f5': "Are there any foods you HATE?",
+                's4f6': "What do you usually drink besides water?", 's4f6p': "E.g., Sodas, juices, coffee with sugar, etc.",
+                's4f7': "Regarding alcohol consumption, which best describes your habit?", 's4f7o1': "I don't drink", 's4f7o2': "Occasionally (1-2 times a month)", 's4f7o3': "Socially (weekends)", 's4f7o4': "Frequently (several times a week)",
+                's4f8': "How often do you eat out?", 's4f8o1': "Rarely (almost never)", 's4f8o2': "1-2 times a week", 's4f8o3': "3-5 times a week", 's4f8o4': "Almost daily",
+                's5Title': "Section 5: Training Experience",
+                's5f1': "What is your training experience level?", 'expOpt1': "Beginner (Never trained or very little)", 'expOpt2': "Intermediate (6+ months of consistent training)", 'expOpt3': "Advanced (Years of training)",
+                's5f2': "Where are you going to train?", 's5f2o1': "Gym", 's5f2o2': "At Home",
+                's5f3': "If you train at home, what equipment do you have?", 's5f3o1': "Dumbbells", 's5f3o2': "Resistance bands", 's5f3o3': "Kettlebell", 's5L3o4': "Barbell and plates", 's5f3o5': "Bodyweight only", 's5f3o6': "Other",
+                's5f4': "If you have dumbbells/kettlebells, specify the weights:",
+                's5f5': "How many days a WEEK can you REALLY commit to training?",
+                's5f6': "How much time do you have available PER session?", 's5f6o1': "30-45 minutes", 's5f6o2': "45-60 minutes", 's5f6o3': "60-90 minutes", 's5f6o4': "More than 90 minutes",
+                's5f7': "Do you have any injuries (past or present)?", 'placeholderLesiones': "If none, write 'None'.",
+                's5f8': "Is there anything else you think I should know?", 's5f8p': "Fears, past challenges, etc.",
+                'btnEnviar': "Send My Questionnaire",
+                'footerRights': `&copy; ${new Date().getFullYear()} Frank Mercado Fit. All rights reserved.`
+            },
+            'es': {
+                'nav_logo': 'Frank Mercado <span class="text-blue-600 dark:text-blue-500">Fit</span>',
+                'lang_es': 'Español',
+                'lang_en': 'English',
+                'formTitle': "Cuestionario de Valoración Fitness",
+                'formWelcome': "¡Bienvenido/a! Estás a un paso de recibir tu plan personalizado. Las siguientes preguntas son esenciales para diseñar un Sistema M-Fit™ 100% adaptado a ti.",
+                'formRequired': "Las preguntas con <span class='text-red-500 font-bold'>*</span> son obligatorias.",
+                'errorMsg': "Debes completar este campo.",
+                'selectOpt': "Selecciona...",
+                's1Title': "Sección 1: Información Básica y Objetivos",
+                's1f1': "Nombre Completo:", 's1f2': "Tu Mejor Correo Electrónico:", 's1f3': "Número de WhatsApp (Opcional):",
+                's1f4': "¿Cuál es tu objetivo principal?", 's1f4o1': "Perder grasa / Definir", 's1f4o2': "Ganar masa muscular", 's1f4o3': "Recomposición Corporal (Ganar músculo y perder grasa a la vez)", 's1f4o4': "Mejorar mi salud y hábitos en general", 's1f4o5': "Otro",
+                's1f5': "Del 1 al 10, ¿qué tan comprometido/a te sientes para empezar AHORA?",
+                's1f6': "Describe brevemente por qué quieres lograr este objetivo:", 's1f6p': "Ej: 'Quiero sentirme con más confianza'",
+                's2Title': "Sección 2: Tu Punto de Partida",
+                's2f1': "Edad:", 's2f2': "Sexo Biológico:", 'generoMasc': "Masculino", 'generoFem': "Femenino",
+                's2f3': "Altura (en cm):", 's2f4': "Peso Actual (en kg):", 's2f5': "Peso Deseado (en kg):", 's2f6': "Medida de Cintura en cm (Opcional):",
+                's3Title': "Sección 3: Tu Estilo de Vida",
+                's3f1': "Describe brevemente tu ocupación:",
+                's3f2': "Nivel de actividad DIARIA (sin contar ejercicio):", 's3f2o1': "Sedentario (trabajo de oficina, poco movimiento)", 's3f2o2': "Ligero (caminatas ocasionales, de pie parte del día)", 's3f2o3': "Activo (trabajo físico, camino o me muevo mucho)", 's3f2o4': "Muy Activo (trabajo físico intenso, atleta)",
+                's3f3': "¿Cuántas horas duermes por noche en promedio?", 's3f3o1': "Menos de 5 horas", 's3f3o2': "5-6 horas", 's3f3o3': "6-7 horas", 's3f3o4': "7-8 horas", 's3f3o5': "Más de 8 horas",
+                's3f4': "Del 1 al 10, ¿cómo calificarías tu nivel de estrés promedio?",
+                's4Title': "Sección 4: Hábitos de Nutrición",
+                's4f1': "¿Tienes alguna alergia, intolerancia o condición médica relevante?", 's4f1p': "Ej: Intolerancia a la lactosa, alergia a frutos secos, etc.",
+                's4f2': "¿Sigues alguna preferencia dietética?", 's4f2o1': "Ninguna", 's4f2o2': "Vegetariana", 's4f2o3': "Vegana", 's4f2o4': "Pescetariana", 's4f2o5': "Otro",
+                's4f3': "¿Cuántas comidas principales haces al día?", 's4f3o5': "5 o más",
+                's4f4': "Marca los grupos de alimentos que MÁS te gustan:", 's4f4o1': "Pollo", 's4f4o2': "Carne roja", 's4f4o3': "Pescado", 's4f4o4': "Huevos", 's4f4o5': "Lácteos", 's4f4o6': "Legumbres", 's4f4o7': "Vegetales", 's4f4o8': "Frutas", 's4f4o9': "Grasas saludables",
+                's4f5': "¿Hay algún alimento que ODIAS?",
+                's4f6': "¿Qué sueles beber además de agua?", 's4f6p': "Ej: Gaseosas, jugos, café con azúcar, etc.",
+                's4f7': "Respecto al consumo de alcohol, ¿cuál describe mejor tu hábito?", 's4f7o1': "No consumo", 's4f7o2': "Ocasionalmente (1-2 veces al mes)", 's4f7o3': "Socialmente (fines de semana)", 's4f7o4': "Frecuentemente (varias veces por semana)",
+                's4f8': "¿Con qué frecuencia sueles comer fuera de casa?", 's4f8o1': "Rara vez (casi nunca)", 's4f8o2': "1-2 veces por semana", 's4f8o3': "3-5 veces por semana", 's4f8o4': "Casi a diario",
+                's5Title': "Sección 5: Experiencia de Entrenamiento",
+                's5f1': "¿Cuál es tu nivel de experiencia entrenando?", 'expOpt1': "Principiante (Nunca he entrenado o muy poco)", 'expOpt2': "Intermedio (Llevo entrenando consistentemente 6+ meses)", 'expOpt3': "Avanzado (Llevo años entrenando)",
+                's5f2': "¿Dónde vas a entrenar?", 's5f2o1': "Gimnasio / Gym", 's5f2o2': "En Casa",
+                's5f3': "Si entrenas en casa, ¿qué equipamiento tienes?", 's5f3o1': "Mancuernas", 's5f3o2': "Bandas de resistencia", 's5f3o3': "Kettlebell", 's5f3o4': "Barra y discos", 's5f3o5': "Solo peso corporal", 's5f3o6': "Otro",
+                's5f4': "Si tienes mancuernas/kettlebell, especifica los pesos:",
+                's5f5': "¿Cuántos días A LA SEMANA puedes comprometerte a entrenar?",
+                's5f6': "¿Cuánto tiempo tienes disponible POR SESIÓN?", 's5f6o1': "30-45 minutos", 's5f6o2': "45-60 minutos", 's5f6o3': "60-90 minutos", 's5f6o4': "Más de 90 minutos",
+                's5f7': "¿Tienes alguna lesión (pasada o presente)?", 'placeholderLesiones': "Si no tienes, escribe 'Ninguna'.",
+                's5f8': "¿Hay algo más que crees que debería saber?", 's5f8p': "Miedos, desafíos pasados, etc.",
+                'btnEnviar': "Enviar Mi Cuestionario",
+                'footerRights': `&copy; ${new Date().getFullYear()} Frank Mercado Fit. Todos los derechos reservados.`
+            }
+        };
+
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const iconSun = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M12 7a5 5 0 015 5 5 5 0 01-5 5 5 5 0 01-5-5 5 5 0 015-5z"></path></svg>`;
+        const iconMoon = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9 9 0 008.354-5.646z"></path></svg>`;
+        
+        // --- FIX: Lógica de Idioma (Texto Simple) ---
+        const langEsBtn = document.getElementById('lang-es-btn');
+        const langEnBtn = document.getElementById('lang-en-btn');
+
+        // SVGs de Banderas (ya no se usan, pero se dejan por si acaso en el futuro)
+        const flagSVGs = {
+            'es': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="24" height="24"><clipPath id="a"><path d="M0 0v30h60V0z"/></clipPath><path d="M0 0v30h60V0z" fill="#E80026"/><g clip-path="url(#a)"><path d="M0 0v15h60V0z" fill="#F0E44B"/><path d="M0 15v15h60V15z" fill="#0085C7"/></g></svg>`,
+            'en': `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="24" height="24"><clipPath id="t"><path d="M0 0v30h60V0z"/></clipPath><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" clip-path="url(#t)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg>`
+        };
+        
+        const phoneInputField = document.querySelector("#whatsapp");
+        const whatsappHiddenInput = document.querySelector("#whatsapp_completo");
+        const form = document.getElementById('mfit-form');
+
+        const updateThemeIcons = (isDarkMode) => {
+            themeToggleBtn.innerHTML = isDarkMode ? iconSun : iconMoon;
+        };
+
+        const toggleTheme = () => {
+            const isDarkMode = document.documentElement.classList.toggle('dark');
+            localStorage.theme = isDarkMode ? 'dark' : 'light';
+            updateThemeIcons(isDarkMode);
+        };
+        
+        themeToggleBtn.addEventListener('click', toggleTheme);
+
+        const setLanguage = (lang) => {
+            document.documentElement.lang = lang;
+            localStorage.setItem('language', lang);
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang]?.[key]) el.innerHTML = translations[lang][key];
+            });
+            document.querySelectorAll('[data-key-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-key-placeholder');
+                if (translations[lang]?.[key]) el.placeholder = translations[lang][key];
+            });
+            
+            // FIX: Actualizar botones de texto simple
+            if (lang === 'es') {
+                langEsBtn.classList.remove('opacity-50');
+                langEnBtn.classList.add('opacity-50');
+            } else {
+                langEnBtn.classList.remove('opacity-50');
+                langEsBtn.classList.add('opacity-50');
+            }
+
+            initializeCustomSelects(lang);
+        };
+
+        // FIX: Eventos del selector de idioma de texto simple
+        langEsBtn.addEventListener('click', (e) => { e.preventDefault(); setLanguage('es'); });
+        langEnBtn.addEventListener('click', (e) => { e.preventDefault(); setLanguage('en'); });
+        
+        function initializeCustomSelects(lang) {
+            document.querySelectorAll('.custom-select-wrapper').forEach(wrapper => {
+                const oldTrigger = wrapper.querySelector('.custom-select-trigger');
+                const oldOptions = wrapper.querySelector('.custom-options');
+                if(oldTrigger) oldTrigger.remove();
+                if(oldOptions) oldOptions.remove();
+                
+                const hiddenSelect = wrapper.querySelector('.hidden-select');
+                const trigger = document.createElement('div');
+                trigger.className = 'custom-select-trigger text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600';
+                trigger.setAttribute('tabindex', '0');
+                const optionsContainer = document.createElement('div');
+                optionsContainer.className = 'custom-options bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg';
+                
+                let selectedText = translations[lang].selectOpt;
+                
+                Array.from(hiddenSelect.options).forEach((option) => {
+                    if (option.value === "") return;
+                    
+                    const key = option.getAttribute('data-key');
+                    const text = key && translations[lang][key] ? translations[lang][key] : (option.textContent || option.value);
+
+                    if (hiddenSelect.value === option.value) {
+                         selectedText = text;
+                    }
+                    
+                    const customOption = document.createElement('div');
+                    customOption.className = 'custom-select-option hover:bg-gray-100 dark:hover:bg-gray-600';
+                    customOption.dataset.value = option.value;
+                    customOption.textContent = text;
+                    
+                    if (hiddenSelect.value === option.value) {
+                        customOption.classList.add('selected', 'bg-blue-50', 'dark:bg-blue-900/50');
+                    }
+                    
+                    customOption.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        hiddenSelect.value = option.value;
+                        trigger.textContent = customOption.textContent;
+                        wrapper.querySelectorAll('.custom-select-option').forEach(opt => opt.classList.remove('selected', 'bg-blue-50', 'dark:bg-blue-900/50'));
+                        customOption.classList.add('selected', 'bg-blue-50', 'dark:bg-blue-900/50');
+                        wrapper.classList.remove('open');
+                        hiddenSelect.dispatchEvent(new Event('change'));
+                        validateField(hiddenSelect); // Validar al cambiar
+                    });
+                    optionsContainer.appendChild(customOption);
+                });
+                
+                trigger.textContent = selectedText;
+                wrapper.appendChild(trigger);
+                wrapper.appendChild(optionsContainer);
+                
+                trigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    document.querySelectorAll('.custom-select-wrapper').forEach(otherWrapper => {
+                        if (otherWrapper !== wrapper) otherWrapper.classList.remove('open');
+                    });
+                    wrapper.classList.toggle('open');
+                });
+            });
+        }
+        
+        // --- Lógica de Validación ---
+        function validateField(field) {
+            const group = field.closest('.form-group');
+            if (!group) return true;
+            let isFieldValid = true;
+
+            if (field.type === 'radio') {
+                const fieldGroup = form.querySelectorAll(`input[name="${field.name}"]`);
+                if ([...fieldGroup].some(f => f.required) && ![...fieldGroup].some(f => f.checked)) {
+                    isFieldValid = false;
+                }
+            } else if (field.type === 'checkbox') {
+                 const fieldGroup = form.querySelectorAll(`input[name="${field.name}"]`);
+                 if ([...fieldGroup].some(f => f.required) && ![...fieldGroup].some(f => f.checked)) {
+                     isFieldValid = false;
+                 }
+            } else {
+                if (field.required && field.value.trim() === '') {
+                    isFieldValid = false;
+                }
+            }
+            group.classList.toggle('error', !isFieldValid);
+            return isFieldValid;
+        }
+
+        function validateForm() {
+            let isFormValid = true;
+            const fieldsToValidate = form.querySelectorAll('[required]');
+            const validatedGroups = new Set();
+
+            fieldsToValidate.forEach(field => {
+                const fieldName = field.name;
+                if (field.type === 'radio' || field.type === 'checkbox') {
+                    if (!validatedGroups.has(fieldName)) {
+                        if (!validateField(field)) isFormValid = false;
+                        validatedGroups.add(fieldName);
+                    }
+                } else {
+                    if (!validateField(field)) isFormValid = false;
+                }
+            });
+            return isFormValid;
+        }
+
+        // --- INICIALIZACIÓN ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const isDarkMode = document.documentElement.classList.contains('dark');
+            updateThemeIcons(isDarkMode);
+            
+            const savedLang = localStorage.getItem('language');
+            const browserLang = navigator.language.split('-')[0];
+            const defaultLang = savedLang || (browserLang === 'es' ? 'es' : 'en');
+            setLanguage(defaultLang); // <-- Esto inicializará las banderas y el idioma
+
+            const phoneInput = window.intlTelInput(phoneInputField, {
+                initialCountry: "auto",
+                geoIpLookup: function(callback) {
+                    fetch("https://ipapi.co/json")
+                      .then(res => res.json())
+                      .then(data => callback(data.country_code || "us"))
+                      .catch(() => callback("us"));
+                },
+                preferredCountries: ['co', 'es', 'mx', 'us', 've', 'ar', 'cl', 'pe'],
+                separateDialCode: false,
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js",
+            });
+
+            form.addEventListener('submit', function(event) {
+                if (phoneInputField.value.trim() && phoneInput.isValidNumber()) {
+                    whatsappHiddenInput.value = phoneInput.getNumber();
+                } else {
+                     whatsappHiddenInput.value = "";
+                }
+
+                if (!validateForm()) {
+                    event.preventDefault();
+                    const firstError = form.querySelector('.form-group.error');
+                    if (firstError) {
+                        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        const firstInput = firstError.querySelector('input, select, textarea');
+                        if (firstInput) firstInput.focus();
+                    }
+                }
+            });
+
+            window.addEventListener('click', function(e) {
+                document.querySelectorAll('.custom-select-wrapper').forEach(wrapper => {
+                    if (!wrapper.contains(e.target)) {
+                        wrapper.classList.remove('open');
+                    }
+                });
+                // FIX: Ya no es necesario ocultar el dropdown de idioma
+            });
+        });
+    </script>
+</body>
+</html>
+

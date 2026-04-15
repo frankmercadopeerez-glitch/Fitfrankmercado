@@ -1,0 +1,16 @@
+# robots.txt for fit.frankmercado.com
+# Generated for Frank Mercado Fit
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://fit.frankmercado.com/sitemap.xml
+
+# Crawl delay (opcional, para evitar sobrecarga)
+Crawl-delay: 1
+
+# Disallow admin or private areas (if any)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.pdf$

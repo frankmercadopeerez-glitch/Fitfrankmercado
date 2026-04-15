@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth"> <!-- Default language 'en' -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - Frank Mercado Fit</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Script para Modo Noche/Día y configuración de Tailwind -->
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        tailwind.config = {
+          darkMode: 'class',
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .legal-content h2 { font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; }
+        .legal-content h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .legal-content p { margin-bottom: 1rem; line-height: 1.6; }
+        .legal-content ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1rem; }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+
+    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-gray-900 dark:text-white" data-key="nav_logo">
+                Frank Mercado <span class="text-blue-600 dark:text-blue-500">Fit</span>
+            </a>
+            <div class="flex items-center space-x-3">
+                <a href="index.html" class="text-blue-600 dark:text-blue-400 hover:underline mr-4" data-key="nav_back">
+                    Back to Home
+                </a>
+                
+                <!-- Selector de Idioma (estilo texto simple) -->
+                <div class="flex items-center space-x-2 text-sm font-medium">
+                    <button id="lang-es-btn" class="text-gray-900 dark:text-white opacity-50 hover:opacity-100" data-lang="es">ES</button>
+                    <span class="text-gray-300 dark:text-gray-600">|</span>
+                    <button id="lang-en-btn" class="text-gray-900 dark:text-white opacity-50 hover:opacity-100" data-lang="en">EN</button>
+                </div>
+
+                <!-- FIX: Botón Tema Noche/Día (sin círculo) -->
+                <button id="theme-toggle-btn" class="flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <!-- Icono se insertará por JS -->
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 p-8 md:p-12 rounded-lg shadow-xl">
+            <h1 class="text-3xl md:text-4xl font-bold mb-6" data-key="title">Terms and Conditions</h1>
+            <p class="text-gray-600 dark:text-gray-400 mb-4" data-key="date">Last updated: November 01, 2025</p>
+            
+            <div class="legal-content">
+                <p data-key="p1">
+                    These Terms and Conditions ("Terms") govern your access to and use of the services offered on [fit.frankmercado.com] ("Website"), operated by Frank Mercado Fit.
+                </p>
+
+                <h2 data-key="h2_1">1. Acceptance of Terms</h2>
+                <p data-key="p2">
+                    By accessing the Website, purchasing a plan, or submitting the form for a free plan, you agree to be bound by these Terms and our Privacy Policy. If you do not agree, you must not use our services.
+                </p>
+
+                <h2 data-key="h2_2">2. Description of Services</h2>
+                <p data-key="p3">
+                    We offer digital fitness plans (the "Paid Plan") and a free starter plan (the "Free Plan"). These plans are digital products delivered electronically.
+                </p>
+
+                <h2 data-key="h2_3">3. Payments and Refunds</h2>
+                <p data-key="p4">
+                    <b>Payments:</b> All payments for the Paid Plan are processed via ePayco. You agree to pay all charges at the prices then in effect.
+                </p>
+                <p data-key="p5">
+                    <b>Refund Policy:</b> Due to the digital nature of our products, all sales are final. No refunds are offered once the product has been delivered, except as required by applicable law.
+                </p>
+
+                <h2 data-key="h2_4">4. Medical Disclaimer</h2>
+                <p data-key="p6">
+                    <b>IMPORTANT:</b> The services and information provided by Frank Mercado Fit (including all plans) are for informational purposes only. We are not medical providers.
+                </p>
+                <p data-key="p7">
+                    You must consult your physician or other qualified health professional before starting any diet or exercise program, especially if you have a pre-existing medical condition. You assume all risks of participating in this program.
+                </p>
+
+                <h2 data-key="h2_5">5. Intellectual Property</h2>
+                <p data-key="p8">
+                    All content on the Website, including plans, text, graphics, and logos, is the exclusive property of Frank Mercado Fit and is protected by copyright laws. You may not copy, distribute, or resell any material without our express written permission.
+                </p>
+                 <h2 data-key="h2_6">6. Termination</h2>
+                <p data-key="p9">
+                    We reserve the right to suspend or terminate your access to our services at any time, without notice, for any violation of these Terms.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center py-8">
+        <p class="text-sm text-gray-500" data-key="footer_copy">
+            &copy; <span id="current-year"></span> Frank Mercado Fit. All rights reserved.
+        </p>
+    </footer>
+
+    <script>
+        // --- Traducciones ---
+        const translations = {
+            'es': {
+                'nav_logo': 'Frank Mercado <span class="text-blue-600 dark:text-blue-500">Fit</span>',
+                'nav_back': 'Volver al inicio',
+                'title': 'Términos y Condiciones',
+                'date': 'Última actualización: 01 de Noviembre de 2025',
+                'p1': 'Estos Términos y Condiciones ("Términos") rigen su acceso y uso de los servicios ofrecidos en [fit.frankmercado.com] ("Sitio Web"), operado por Frank Mercado Fit.',
+                'h2_1': '1. Aceptación de los Términos',
+                'p2': 'Al acceder al Sitio Web, comprar un plan o enviar el formulario para un plan gratuito, usted acepta estar sujeto a estos Términos y a nuestra Política de Privacidad. Si no está de acuerdo, no debe usar nuestros servicios.',
+                'h2_2': '2. Descripción de Servicios',
+                'p3': 'Ofrecemos planes de fitness digitales (el "Plan de Pago") y un plan de inicio gratuito (el "Plan Gratuito"). Estos planes son productos digitales que se entregan electrónicamente.',
+                'h2_3': '3. Pagos y Reembolsos',
+                'p4': '<b>Pagos:</b> Todos los pagos por el Plan de Pago se procesan a través de ePayco. Usted acepta pagar todos los cargos al precio vigente en ese momento.',
+                'p5': '<b>Política de Reembolso:</b> Debido a la naturaleza digital de nuestros productos, todas las ventas son finales. No se ofrecen reembolsos una vez que el producto ha sido entregado, excepto si la ley aplicable lo exige.',
+                'h2_4': '4. Descargo de Responsabilidad Médica',
+                'p6': '<b>IMPORTANTE:</b> Los servicios y la información proporcionada por Frank Mercado Fit (incluidos todos los planes) son solo para fines informativos. No somos proveedores médicos.',
+                'p7': 'Debe consultar con su médico u otro profesional de la salud calificado antes de comenzar cualquier programa de dieta o ejercicio, especialmente si tiene alguna condición médica preexistente. Usted asume todos los riesgos de participar en este programa.',
+                'h2_5': '5. Propiedad Intelectual',
+                'p8': 'Todo el contenido del Sitio Web, incluidos los planes, textos, gráficos y logotipos, son propiedad exclusiva de Frank Mercado Fit y están protegidos por las leyes de derechos de autor. No puede copiar, distribuir ni revender ningún material sin nuestro permiso expreso por escrito.',
+                'h2_6': '6. Terminación',
+                'p9': 'Nos reservamos el derecho de suspender o cancelar su acceso a nuestros servicios en cualquier momento, sin previo aviso, por cualquier violación de estos Términos.',
+                'footer_copy': '&copy; <span id="current-year"></span> Frank Mercado Fit. Todos los derechos reservados.'
+            },
+            'en': {
+                'nav_logo': 'Frank Mercado <span class="text-blue-600 dark:text-blue-500">Fit</span>',
+                'nav_back': 'Back to Home',
+                'title': 'Terms and Conditions',
+                'date': 'Last updated: November 01, 2025',
+                'p1': 'These Terms and Conditions ("Terms") govern your access to and use of the services offered on [fit.frankmercado.com] ("Website"), operated by Frank Mercado Fit.',
+                'h2_1': '1. Acceptance of Terms',
+                'p2': 'By accessing the Website, purchasing a plan, or submitting the form for a free plan, you agree to be bound by these Terms and our Privacy Policy. If you do not agree, you must not use our services.',
+                'h2_2': '2. Description of Services',
+                'p3': 'We offer digital fitness plans (the "Paid Plan") and a free starter plan (the "Free Plan"). These plans are digital products delivered electronically.',
+                'h2_3': '3. Payments and Refunds',
+                'p4': '<b>Payments:</b> All payments for the Paid Plan are processed via ePayco. You agree to pay all charges at the prices then in effect.',
+                'p5': '<b>Refund Policy:</b> Due to the digital nature of our products, all sales are final. No refunds are offered once the product has been delivered, except as required by applicable law.',
+                'h2_4': '4. Medical Disclaimer',
+                'p6': '<b>IMPORTANT:</b> The services and information provided by Frank Mercado Fit (including all plans) are for informational purposes only. We are not medical providers.',
+                'p7': 'You must consult your physician or other qualified health professional before starting any diet or exercise program, especially if you have a pre-existing medical condition. You assume all risks of participating in this program.',
+                'h2_5': '5. Intellectual Property',
+                'p8': 'All content on the Website, including plans, text, graphics, and logos, is the exclusive property of Frank Mercado Fit and is protected by copyright laws. You may not copy, distribute, or resell any material without our express written permission.',
+                'h2_6': '6. Termination',
+                'p9': 'We reserve the right to suspend or terminate your access to our services at any time, without notice, for any violation of these Terms.',
+                'footer_copy': '&copy; <span id="current-year"></span> Frank Mercado Fit. All rights reserved.'
+            }
+        };
+
+        // --- Año del Footer ---
+        document.getElementById('current-year').innerText = new Date().getFullYear();
+
+        // --- Lógica de Tema (Modo Noche/Día) ---
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const iconSun = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M12 7a5 5 0 015 5 5 5 0 01-5 5 5 5 0 01-5-5 5 5 0 015-5z"></path></svg>`;
+        const iconMoon = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9 9 0 008.354-5.646z"></path></svg>`;
+
+        const updateThemeIcons = (isDarkMode) => {
+            themeToggleBtn.innerHTML = isDarkMode ? iconSun : iconMoon;
+        };
+
+        const toggleTheme = () => {
+            const isDarkMode = document.documentElement.classList.toggle('dark');
+            localStorage.theme = isDarkMode ? 'dark' : 'light';
+            updateThemeIcons(isDarkMode);
+        };
+        
+        themeToggleBtn.addEventListener('click', toggleTheme);
+
+        // --- Lógica de Idioma (Texto Simple) ---
+        const langEsBtn = document.getElementById('lang-es-btn');
+        const langEnBtn = document.getElementById('lang-en-btn');
+
+        const setLanguage = (lang) => {
+            document.documentElement.lang = lang;
+            localStorage.setItem('language', lang);
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+            
+            if (lang === 'es') {
+                langEsBtn.classList.remove('opacity-50');
+                langEnBtn.classList.add('opacity-50');
+            } else {
+                langEnBtn.classList.remove('opacity-50');
+                langEsBtn.classList.add('opacity-50');
+            }
+        };
+
+        langEsBtn.addEventListener('click', (e) => { e.preventDefault(); setLanguage('es'); });
+        langEnBtn.addEventListener('click', (e) => { e.preventDefault(); setLanguage('en'); });
+        
+        // --- Inicialización al Cargar ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const isDarkMode = document.documentElement.classList.contains('dark');
+            updateThemeIcons(isDarkMode);
+            
+            const savedLang = localStorage.getItem('language');
+            const browserLang = navigator.language.split('-')[0];
+            const defaultLang = savedLang || (browserLang === 'es' ? 'es' : 'en');
+            setLanguage(defaultLang);
+        });
+    </script>
+
+</body>
+</html>
+
+

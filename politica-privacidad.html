@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth"> <!-- Default language 'en' -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Frank Mercado Fit</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Script para Modo Noche/Día y configuración de Tailwind -->
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        tailwind.config = {
+          darkMode: 'class',
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .legal-content h2 { font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; }
+        .legal-content h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        .legal-content p { margin-bottom: 1rem; line-height: 1.6; }
+        .legal-content ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1rem; }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+
+    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-gray-900 dark:text-white" data-key="nav_logo">
+                Frank Mercado <span class="text-blue-600 dark:text-blue-500">Fit</span>
+            </a>
+            <div class="flex items-center space-x-3">
+                <a href="index.html" class="text-blue-600 dark:text-blue-400 hover:underline mr-4" data-key="nav_back">
+                    Back to Home
+                </a>
+                
+                <!-- Selector de Idioma (estilo texto simple) -->
+                <div class="flex items-center space-x-2 text-sm font-medium">
+                    <button id="lang-es-btn" class="text-gray-900 dark:text-white opacity-50 hover:opacity-100" data-lang="es">ES</button>
+                    <span class="text-gray-300 dark:text-gray-600">|</span>
+                    <button id="lang-en-btn" class="text-gray-900 dark:text-white opacity-50 hover:opacity-100" data-lang="en">EN</button>
+                </div>
+
+                <!-- FIX: Botón Tema Noche/Día (sin círculo) -->
+                <button id="theme-toggle-btn" class="flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <!-- Icono se insertará por JS -->
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 p-8 md:p-12 rounded-lg shadow-xl">
+            <h1 class="text-3xl md:text-4xl font-bold mb-6" data-key="title">Privacy Policy</h1>
+            <p class="text-gray-600 dark:text-gray-400 mb-4" data-key="date">Last updated: November 01, 2025</p>
+            
+            <div class="legal-content">
+                <p data-key="p1">
+                    Welcome to Frank Mercado Fit ("us", "we", "our"). We take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website [fit.frankmercado.com], purchase our plans, or subscribe to our free plan.
+                </p>
+
+                <h2 data-key="h2_1">1. Information Collection</h2>
+                <p data-key="p2">
+                    We collect personal information that you voluntarily provide to us. This includes:
+                </p>
+                <ul>
+                    <li data-key="li1"><b>Contact Information:</b> Name, email address, WhatsApp number.</li>
+                    <li data-key="li2"><b>Payment Information:</b> When you purchase a plan, your payment data is processed by our third-party provider (e.g., ePayco). We do not store your full credit card information.</li>
+                    <li data-key="li3"><b>Health and Fitness Information:</b> Information provided in our questionnaires (free or paid), such as goals, training experience, habits, etc.</li>
+                </ul>
+
+                <h2 data-key="h2_2">2. Use of Your Information</h2>
+                <p data-key="p3">
+                    We use the information we collect to:
+                </p>
+                <ul>
+                    <li data-key="li4">Provide and deliver the services or products you request (Free Plan or Paid Plan).</li>
+                    <li data-key="li5">Process transactions and send confirmations.</li>
+                    <li data-key="li6">Communicate with you about your account, support, and updates.</li>
+                    <li data-key="li7">Send marketing communications (newsletters, offers) if you have opted-in. You can opt-out at any time.</li>
+                </ul>
+
+                <h2 data-key="h2_3">3. Disclosure of Your Information</h2>
+                <p data-key="p4">
+                    We do not sell or rent your personal information to third parties. We may share information with:
+                </p>
+                <ul>
+                    <li data-key="li8"><b>Service Providers:</b> Such as payment processors (ePayco) and email service providers who help us operate our business.</li>
+                    <li data-key="li9"><b>Legal Compliance:</b> If required by law or to protect our rights.</li>
+                </ul>
+
+                <h2 data-key="h2_4">4. Data Security</h2>
+                <p data-key="p5">
+                    We use reasonable administrative, technical, and physical measures to protect your personal information. However, no method of transmission over the Internet is 100% secure.
+                </p>
+
+                <h2 data-key="h2_5">5. Your Rights</h2>
+                <p data-key="p6">
+                    You have the right to access, correct, or delete your personal information. Please contact us at [YOUR_SUPPORT_EMAIL@example.com] to make these requests.
+                </p>
+
+                <h2 data-key="h2_6">6. Changes to this Policy</h2>
+                <p data-key="p7">
+                    We may update this privacy policy from time to time. The updated version will be indicated by the "Last updated" date at the top.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center py-8">
+        <p class="text-sm text-gray-500" data-key="footer_copy">
+            &copy; <span id="current-year"></span> Frank Mercado Fit. All rights reserved.
+        </p>
+    </footer>
+
+    <script>
+        // --- Traducciones ---
+        const translations = {
+            'es': {
+                'nav_logo': 'Frank Mercado <span class="text-blue-600 dark:text-blue-500">Fit</span>',
+                'nav_back': 'Volver al inicio',
+                'title': 'Política de Privacidad',
+                'date': 'Última actualización: 01 de Noviembre de 2025',
+                'p1': 'Bienvenido a Frank Mercado Fit ("nosotros", "nuestro"). Nos tomamos muy en serio su privacidad. Esta Política de Privacidad explica cómo recopilamos, usamos, divulgamos y salvaguardamos su información cuando visita nuestro sitio web [fit.frankmercado.com], compra nuestros planes o se suscribe a nuestro plan gratuito.',
+                'h2_1': '1. Recopilación de Información',
+                'p2': 'Recopilamos información personal que usted nos proporciona voluntariamente. Esto incluye:',
+                'li1': '<b>Información de Contacto:</b> Nombre, dirección de correo electrónico, número de WhatsApp.',
+                'li2': '<b>Información de Pago:</b> Cuando compra un plan, sus datos de pago son procesados por nuestro proveedor externo (por ejemplo, ePayco). No almacenamos la información completa de su tarjeta de crédito.',
+                'li3': '<b>Información de Salud y Fitness:</b> La información proporcionada en nuestros cuestionarios (gratis o de pago), como objetivos, experiencia de entrenamiento, hábitos, etc.',
+                'h2_2': '2. Uso de su Información',
+                'p3': 'Usamos la información que recopilamos para:',
+                'li4': 'Proveer y entregar los servicios o productos que solicita (Plan Gratuito o Plan de Pago).',
+                'li5': 'Procesar transacciones y enviar confirmaciones.',
+                'li6': 'Comunicarnos con usted sobre su cuenta, soporte y actualizaciones.',
+                'li7': 'Enviar comunicaciones de marketing (boletines, ofertas) si ha optado por recibirlas. Puede darse de baja en cualquier momento.',
+                'h2_3': '3. Divulgación de su Información',
+                'p4': 'No vendemos ni alquilamos su información personal a terceros. Podemos compartir información con:',
+                'li8': '<b>Proveedores de Servicios:</b> Como procesadores de pago (ePayco) y proveedores de servicios de correo electrónico (Email Marketing) que nos ayudan a operar nuestro negocio.',
+                'li9': '<b>Cumplimiento Legal:</b> Si la ley lo exige o para proteger nuestros derechos.',
+                'h2_4': '4. Seguridad de los Datos',
+                'p5': 'Utilizamos medidas administrativas, técnicas y físicas razonables para proteger su información personal. Sin embargo, ningún método de transmisión por Internet es 100% seguro.',
+                'h2_5': '5. Sus Derechos',
+                'p6': 'Usted tiene derecho a acceder, corregir o eliminar su información personal. Póngase en contacto con nosotros en [TU_EMAIL_DE_SOPORTE@ejemplo.com] para realizar estas solicitudes.',
+                'h2_6': '6. Cambios a esta Política',
+                'p7': 'Podemos actualizar esta política de privacidad de vez en cuando. La versión actualizada se indicará con la fecha de "Última actualización" en la parte superior.',
+                'footer_copy': '&copy; <span id="current-year"></span> Frank Mercado Fit. Todos los derechos reservados.'
+            },
+            'en': {
+                'nav_logo': 'Frank Mercado <span class="text-blue-600 dark:text-blue-500">Fit</span>',
+                'nav_back': 'Back to Home',
+                'title': 'Privacy Policy',
+                'date': 'Last updated: November 01, 2025',
+                'p1': 'Welcome to Frank Mercado Fit ("us", "we", "our"). We take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website [fit.frankmercado.com], purchase our plans, or subscribe to our free plan.',
+                'h2_1': '1. Information Collection',
+                'p2': 'We collect personal information that you voluntarily provide to us. This includes:',
+                'li1': '<b>Contact Information:</b> Name, email address, WhatsApp number.',
+                'li2': '<b>Payment Information:</b> When you purchase a plan, your payment data is processed by our third-party provider (e.g., ePayco). We do not store your full credit card information.',
+                'li3': '<b>Health and Fitness Information:</b> Information provided in our questionnaires (free or paid), such as goals, training experience, habits, etc.',
+                'h2_2': '2. Use of Your Information',
+                'p3': 'We use the information we collect to:',
+                'li4': 'Provide and deliver the services or products you request (Free Plan or Paid Plan).',
+                'li5': 'Process transactions and send confirmations.',
+                'li6': 'Communicate with you about your account, support, and updates.',
+                'li7': 'Send marketing communications (newsletters, offers) if you have opted-in. You can opt-out at any time.',
+                'h2_3': '3. Disclosure of Your Information',
+                'p4': 'We do not sell or rent your personal information to third parties. We may share information with:',
+                'li8': '<b>Service Providers:</b> Such as payment processors (ePayco) and email service providers who help us operate our business.',
+                'li9': '<b>Legal Compliance:</b> If required by law or to protect our rights.',
+                'h2_4': '4. Data Security',
+                'p5': 'We use reasonable administrative, technical, and physical measures to protect your personal information. However, no method of transmission over the Internet is 100% secure.',
+                'h2_5': '5. Your Rights',
+                'p6': 'You have the right to access, correct, or delete your personal information. Please contact us at [YOUR_SUPPORT_EMAIL@example.com] to make these requests.',
+                'h2_6': '6. Changes to this Policy',
+                'p7': 'We may update this privacy policy from time to time. The updated version will be indicated by the "Last updated" date at the top.',
+                'footer_copy': '&copy; <span id="current-year"></span> Frank Mercado Fit. All rights reserved.'
+            }
+        };
+
+        // --- Año del Footer ---
+        document.getElementById('current-year').innerText = new Date().getFullYear();
+
+        // --- Lógica de Tema (Modo Noche/Día) ---
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const iconSun = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M12 7a5 5 0 015 5 5 5 0 01-5 5 5 5 0 01-5-5 5 5 0 015-5z"></path></svg>`;
+        const iconMoon = `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9 9 0 008.354-5.646z"></path></svg>`;
+
+        const updateThemeIcons = (isDarkMode) => {
+            themeToggleBtn.innerHTML = isDarkMode ? iconSun : iconMoon;
+        };
+
+        const toggleTheme = () => {
+            const isDarkMode = document.documentElement.classList.toggle('dark');
+            localStorage.theme = isDarkMode ? 'dark' : 'light';
+            updateThemeIcons(isDarkMode);
+        };
+        
+        themeToggleBtn.addEventListener('click', toggleTheme);
+
+        // --- Lógica de Idioma (Texto Simple) ---
+        const langEsBtn = document.getElementById('lang-es-btn');
+        const langEnBtn = document.getElementById('lang-en-btn');
+
+        const setLanguage = (lang) => {
+            document.documentElement.lang = lang;
+            localStorage.setItem('language', lang);
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+            
+            if (lang === 'es') {
+                langEsBtn.classList.remove('opacity-50');
+                langEnBtn.classList.add('opacity-50');
+            } else {
+                langEnBtn.classList.remove('opacity-50');
+                langEsBtn.classList.add('opacity-50');
+            }
+        };
+
+        langEsBtn.addEventListener('click', (e) => { e.preventDefault(); setLanguage('es'); });
+        langEnBtn.addEventListener('click', (e) => { e.preventDefault(); setLanguage('en'); });
+        
+        // --- Inicialización al Cargar ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const isDarkMode = document.documentElement.classList.contains('dark');
+            updateThemeIcons(isDarkMode);
+            
+            const savedLang = localStorage.getItem('language');
+            const browserLang = navigator.language.split('-')[0];
+            const defaultLang = savedLang || (browserLang === 'es' ? 'es' : 'en');
+            setLanguage(defaultLang);
+        });
+    </script>
+
+</body>
+</html>
+
+
