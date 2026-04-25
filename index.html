@@ -32,6 +32,7 @@
       html {
         scroll-behavior: smooth;
         -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
       }
       body {
         font-family: "Inter", sans-serif;
@@ -1112,6 +1113,22 @@
         .results-grid {
           grid-template-columns: 1fr;
         }
+        .authority-icons {
+          gap: 16px;
+          justify-content: flex-start;
+        }
+        .price-highlight {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          text-align: center;
+          font-size: 0.85rem;
+          width: 100%;
+          box-sizing: border-box;
+        }
+        .hero-subtitle {
+          max-width: 100%;
+        }
       }
       @media (max-width: 480px) {
         .hero {
@@ -1127,6 +1144,24 @@
         }
         .hero-stat-value {
           font-size: 2rem;
+        }
+        .hero-countdown {
+          flex-wrap: wrap;
+          justify-content: flex-start;
+          gap: 6px;
+          width: 100%;
+          box-sizing: border-box;
+        }
+        .nav {
+          padding: 14px 16px;
+        }
+        .nav-logo {
+          font-size: 1.2rem;
+        }
+        .nav-cta {
+          font-size: 0.7rem;
+          padding: 7px 10px;
+          gap: 4px;
         }
       }
 
@@ -1160,6 +1195,39 @@
               rgba(10, 10, 10, 0.55) 100%
             ),
             linear-gradient(to top, rgba(10, 10, 10, 0.6) 0%, transparent 60%);
+        }
+      }
+
+      /* ── Extra-small screens (≤ 360px) ── */
+      @media (max-width: 360px) {
+        .nav {
+          padding: 12px 14px;
+        }
+        .nav-logo {
+          font-size: 1rem;
+        }
+        .nav-cta {
+          font-size: 0.65rem;
+          padding: 6px 8px;
+          letter-spacing: 0;
+        }
+        .hero {
+          padding: 82px 14px 44px;
+        }
+        .section {
+          padding: 50px 14px;
+        }
+      }
+
+      /* ── Free-plan outline button ── */
+      @media (max-width: 600px) {
+        .btn-free-plan {
+          display: flex !important;
+          width: 100% !important;
+          max-width: 420px;
+          padding: 16px 20px !important;
+          box-sizing: border-box;
+          justify-content: center !important;
         }
       }
     </style>
@@ -2141,6 +2209,7 @@
 
             <a
               href="freeplan/"
+              class="btn-free-plan"
               style="
                 display: inline-flex;
                 align-items: center;
