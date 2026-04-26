@@ -1199,24 +1199,52 @@
       /* ── Desktop Layout ── */
       @media (min-width: 900px) {
         .hero {
-          padding: 120px 40px 80px;
+          padding: 88px 40px 40px;
+          align-items: flex-start;
         }
         .hero-content {
           display: grid;
           grid-template-columns: 1fr auto;
-          gap: 64px;
-          align-items: center;
+          gap: 48px;
+          align-items: start;
+          padding-top: 12px;
         }
         .hero-visual {
           display: flex;
           justify-content: flex-end;
-          align-items: center;
+          align-items: flex-start;
+          padding-top: 4px;
+        }
+        /* Tighten vertical spacing so all content fits above the fold */
+        .hero-badge {
+          margin-bottom: 14px;
+        }
+        .hero-title {
+          margin-bottom: 14px;
+        }
+        .hero-subtitle {
+          margin-bottom: 18px;
+        }
+        .hero-countdown {
+          margin-bottom: 16px;
+        }
+        .hero-guarantee {
+          margin-top: 10px;
+        }
+        .hero-stats {
+          margin-top: 20px;
+          padding-top: 16px;
+          gap: 24px;
+        }
+        .hero-guide-card {
+          width: 290px;
+          padding: 28px 24px;
         }
         .results-grid {
           grid-template-columns: repeat(3, 1fr);
         }
         .section {
-          padding: 100px 40px;
+          padding: 80px 40px;
         }
         .hero-overlay {
           background:
@@ -1504,7 +1532,7 @@
               <div class="result-transformation-badge">-12 kg · 8 semanas</div>
               <img
                 src="images/transformacion1.jpg"
-                alt="Transformación de Carlos V."
+                alt="Transformación de Sofía L."
                 class="result-card-img"
                 onerror="
                   this.src =
@@ -1571,11 +1599,11 @@
                   esperaba. Lo recomiendo al 100%.
                 </p>
                 <div class="result-author">
-                  <div class="result-avatar">CV</div>
+                  <div class="result-avatar">SL</div>
                   <div>
-                    <div class="result-author-name">Carlos V.</div>
+                    <div class="result-author-name">Sofía L.</div>
                     <div class="result-author-tag">
-                      Bogotá, Colombia · Perdió 12 kg
+                      Miami, FL · Recomposición corporal
                     </div>
                   </div>
                 </div>
@@ -1588,7 +1616,7 @@
               </div>
               <img
                 src="images/transformacion2.jpg"
-                alt="Transformación de Sofia L."
+                alt="Transformación de Carlos V."
                 class="result-card-img"
                 onerror="
                   this.src =
@@ -1655,11 +1683,11 @@
                   para mi cuerpo.
                 </p>
                 <div class="result-author">
-                  <div class="result-avatar">SL</div>
+                  <div class="result-avatar">CV</div>
                   <div>
-                    <div class="result-author-name">Sofía L.</div>
+                    <div class="result-author-name">Carlos V.</div>
                     <div class="result-author-tag">
-                      Miami, FL · Recomposición corporal
+                      Bogotá, Colombia · Perdió 12 kg
                     </div>
                   </div>
                 </div>
@@ -1672,95 +1700,11 @@
               </div>
               <img
                 src="images/transformacion3.jpg"
-                alt="Transformación de David G."
-                class="result-card-img"
-                onerror="
-                  this.src =
-                    'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&h=400&fit=crop&auto=format';
-                  this.onerror = null;
-                "
-              />
-              <div class="result-card-body">
-                <div class="result-stars">
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-                    />
-                  </svg>
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-                    />
-                  </svg>
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-                    />
-                  </svg>
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-                    />
-                  </svg>
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-                    />
-                  </svg>
-                </div>
-                <p class="result-quote">
-                  El Sistema M-Fit™ es exactamente lo que necesitaba. Realista,
-                  efectivo y con mucha ciencia detrás. Aprendí a comer bien y a
-                  entrenar inteligente.
-                </p>
-                <div class="result-author">
-                  <div class="result-avatar">DG</div>
-                  <div>
-                    <div class="result-author-name">David G.</div>
-                    <div class="result-author-tag">
-                      Ciudad de México · -8% grasa corporal
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Card 4 -->
-            <div class="result-card">
-              <div class="result-transformation-badge">
-                Recuperó su figura · 10 sem
-              </div>
-              <img
-                src="images/transformacion4.jpg"
                 alt="Transformación de María P."
                 class="result-card-img"
                 onerror="
                   this.src =
-                    'https://images.unsplash.com/photo-1520877880798-5ee004e3f11e?w=600&h=400&fit=crop&auto=format';
+                    'https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=600&h=400&fit=crop&auto=format';
                   this.onerror = null;
                 "
               />
@@ -1828,6 +1772,90 @@
                     <div class="result-author-name">María P.</div>
                     <div class="result-author-tag">
                       Buenos Aires, Argentina · Mamá de 2
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="result-card">
+              <div class="result-transformation-badge">
+                Ganó músculo · 10 sem
+              </div>
+              <img
+                src="images/transformacion4.jpg"
+                alt="Transformación de David G."
+                class="result-card-img"
+                onerror="
+                  this.src =
+                    'https://images.unsplash.com/photo-1520877880798-5ee004e3f11e?w=600&h=400&fit=crop&auto=format';
+                  this.onerror = null;
+                "
+              />
+              <div class="result-card-body">
+                <div class="result-stars">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                    />
+                  </svg>
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                    />
+                  </svg>
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                    />
+                  </svg>
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                    />
+                  </svg>
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                    />
+                  </svg>
+                </div>
+                <p class="result-quote">
+                  El Sistema M-Fit™ es exactamente lo que necesitaba. Realista,
+                  efectivo y con mucha ciencia detrás. Aprendí a comer bien y a
+                  entrenar inteligente.
+                </p>
+                <div class="result-author">
+                  <div class="result-avatar">DG</div>
+                  <div>
+                    <div class="result-author-name">David G.</div>
+                    <div class="result-author-tag">
+                      Ciudad de México · -8% grasa corporal
                     </div>
                   </div>
                 </div>
