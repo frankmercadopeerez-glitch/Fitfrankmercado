@@ -329,6 +329,37 @@
         margin-top: 4px;
       }
 
+      /* ── Mobile: center hero content ── */
+      @media (max-width: 899px) {
+        .hero-left {
+          text-align: center;
+        }
+        .hero-badge {
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .hero-subtitle {
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .hero-countdown {
+          margin-left: auto;
+          margin-right: auto;
+          display: flex;
+          justify-content: center;
+        }
+        .btn-primary {
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .hero-guarantee {
+          justify-content: center;
+        }
+        .hero-stats {
+          justify-content: center;
+        }
+      }
+
       /* ── Hero Visual (desktop guide card) ── */
       .hero-visual {
         display: none;
@@ -1249,7 +1280,7 @@
           <line x1="3" y1="6" x2="21" y2="6" />
           <path d="M16 10a4 4 0 01-8 0" />
         </svg>
-        Comprar Guía — $19 USD
+        Comprar Guía
       </a>
     </nav>
 
@@ -1263,7 +1294,7 @@
           <div class="hero-left">
             <div class="hero-badge">
               <span class="hero-badge-dot"></span>
-              Protocolo Oficial · Edición 2025
+              Protocolo Oficial · Edición 2026
             </div>
 
             <h1 class="heading-xl hero-title">
