@@ -187,12 +187,12 @@
         position: absolute;
         inset: 0;
         background:
-          linear-gradient(
-            to right,
-            rgba(10, 10, 10, 0.97) 50%,
-            rgba(10, 10, 10, 0.35) 100%
+          radial-gradient(
+            ellipse at center,
+            rgba(10, 10, 10, 0.5) 0%,
+            rgba(10, 10, 10, 0.92) 100%
           ),
-          linear-gradient(to top, rgba(10, 10, 10, 0.8) 0%, transparent 60%);
+          linear-gradient(to top, rgba(10, 10, 10, 0.85) 0%, transparent 60%);
         z-index: 1;
       }
       .hero-content {
@@ -201,6 +201,7 @@
         max-width: 680px;
         width: 100%;
         margin: 0 auto;
+        text-align: center;
       }
       .hero-badge {
         display: inline-flex;
@@ -244,7 +245,7 @@
         font-size: clamp(1rem, 2.2vw, 1.2rem);
         color: var(--text-muted);
         max-width: 520px;
-        margin-bottom: 36px;
+        margin: 0 auto 36px;
         line-height: 1.7;
       }
       .btn-primary {
@@ -290,6 +291,7 @@
       .hero-note {
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 8px;
         font-size: 0.8rem;
         color: var(--text-dim);
@@ -432,25 +434,24 @@
         margin: 20px 0;
       }
       .footer-social a {
-        width: 38px;
-        height: 38px;
-        background: var(--dark-3);
-        border: 1px solid var(--border-dim);
-        border-radius: 8px;
+        width: 36px;
+        height: 36px;
+        background: transparent;
+        border: none;
+        border-radius: 0;
         display: flex;
         align-items: center;
         justify-content: center;
         transition: all var(--transition);
-        overflow: hidden;
+        overflow: visible;
       }
       .footer-social a:hover {
-        border-color: var(--border);
-        background: var(--dark-4);
-        transform: translateY(-2px);
+        transform: translateY(-3px) scale(1.12);
+        opacity: 0.85;
       }
       .footer-social img {
-        width: 20px;
-        height: 20px;
+        width: 32px;
+        height: 32px;
         object-fit: contain;
       }
       .footer-copy {
