@@ -1,0 +1,1120 @@
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guía Personalizada M-Fit™ — Frank Mercado Fit</title>
+    <meta
+      name="description"
+      content="Tu plan de nutrición y entrenamiento 100% personalizado. Cuestionario de 5 minutos, cálculo de macros al instante y guía completa entregada en tu correo. $4.99 USD."
+    />
+    <link rel="icon" type="image/png" href="../images/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Barlow+Condensed:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: #0a0a0a;
+        color: #f0ede8;
+        overflow-x: hidden;
+        line-height: 1.6;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      :root {
+        --gold: #d4a843;
+        --gold-light: #f0c96a;
+        --gold-dark: #b8892c;
+        --dark: #0a0a0a;
+        --dark-2: #141414;
+        --dark-3: #1e1e1e;
+        --dark-4: #282828;
+        --text: #f0ede8;
+        --text-muted: #9a9490;
+        --text-dim: #5a5550;
+        --border: rgba(212, 168, 67, 0.2);
+        --border-dim: rgba(255, 255, 255, 0.07);
+        --radius: 12px;
+        --radius-lg: 20px;
+        --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* ── Typography ── */
+      .heading-xl {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: clamp(2.8rem, 8vw, 5.5rem);
+        font-weight: 900;
+        line-height: 1;
+        text-transform: uppercase;
+        letter-spacing: -0.02em;
+      }
+      .heading-lg {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: clamp(2rem, 5vw, 3.4rem);
+        font-weight: 800;
+        line-height: 1.1;
+        text-transform: uppercase;
+        letter-spacing: -0.01em;
+      }
+      .heading-md {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+        font-weight: 800;
+        line-height: 1.15;
+        text-transform: uppercase;
+      }
+      .gold {
+        color: var(--gold);
+      }
+      em.gold {
+        font-style: normal;
+      }
+
+      /* ── Nav ── */
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(10, 10, 10, 0.95);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border-dim);
+      }
+      .nav-logo {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 1.4rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .nav-logo span {
+        color: var(--gold);
+      }
+      .price-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(212, 168, 67, 0.12);
+        border: 1px solid var(--border);
+        color: var(--gold);
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 5px 14px;
+        border-radius: 100px;
+      }
+
+      /* ── Hero ── */
+      .hero {
+        min-height: 100svh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 120px 24px 80px;
+        overflow: hidden;
+      }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        background-image: url("../images/profile-frank.jpg");
+        background-size: cover;
+        background-position: center top;
+        filter: brightness(0.15);
+        z-index: 0;
+      }
+      .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse at center,
+            rgba(10, 10, 10, 0.55) 0%,
+            rgba(10, 10, 10, 0.92) 100%
+          ),
+          linear-gradient(to top, rgba(10, 10, 10, 0.9) 0%, transparent 60%);
+        z-index: 1;
+      }
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 720px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(212, 168, 67, 0.12);
+        border: 1px solid var(--border);
+        color: var(--gold);
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 6px 14px;
+        border-radius: 100px;
+        margin-bottom: 24px;
+      }
+      .hero-badge-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--gold);
+        border-radius: 50%;
+        animation: blink 2s ease infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+
+      .price-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--dark-2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 14px 24px;
+        margin: 28px auto 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .price-usd {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 2.8rem;
+        font-weight: 900;
+        color: var(--gold);
+        line-height: 1;
+      }
+      .price-sep {
+        color: var(--text-dim);
+        font-size: 1.2rem;
+      }
+      .price-cop {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        line-height: 1;
+      }
+      .price-note {
+        width: 100%;
+        text-align: center;
+        font-size: 0.75rem;
+        color: var(--text-dim);
+        margin-top: 4px;
+        letter-spacing: 0.04em;
+      }
+
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        color: #000;
+        font-weight: 800;
+        font-size: clamp(1rem, 2.5vw, 1.15rem);
+        padding: 18px 36px;
+        border-radius: var(--radius);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        border: none;
+        cursor: pointer;
+        transition: all var(--transition);
+        min-height: 58px;
+        box-shadow: 0 8px 32px rgba(212, 168, 67, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 48px rgba(212, 168, 67, 0.45);
+      }
+      .hero-trust {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 0.78rem;
+        color: var(--text-dim);
+        margin-top: 14px;
+        flex-wrap: wrap;
+      }
+      .trust-dot {
+        width: 3px;
+        height: 3px;
+        background: var(--text-dim);
+        border-radius: 50%;
+      }
+
+      /* ── Sections ── */
+      .section {
+        padding: 80px 24px;
+      }
+      .section-alt {
+        background: var(--dark-2);
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .section-label {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--gold);
+        margin-bottom: 12px;
+        padding: 4px 12px;
+        border: 1px solid var(--border);
+        border-radius: 100px;
+      }
+      .section-header {
+        text-align: center;
+        margin-bottom: 56px;
+      }
+      .section-header p {
+        color: var(--text-muted);
+        font-size: 1rem;
+        max-width: 560px;
+        margin: 14px auto 0;
+        line-height: 1.75;
+      }
+
+      /* ── Includes Cards ── */
+      .includes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+      }
+      .include-card {
+        background: var(--dark-3);
+        border: 1px solid var(--border-dim);
+        border-radius: var(--radius-lg);
+        padding: 32px 28px;
+        transition:
+          border-color var(--transition),
+          transform var(--transition);
+      }
+      .include-card:hover {
+        border-color: var(--border);
+        transform: translateY(-4px);
+      }
+      .include-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: var(--radius);
+        background: rgba(212, 168, 67, 0.1);
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+      .include-card h3 {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 1.3rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: var(--text);
+        margin-bottom: 10px;
+        letter-spacing: 0.02em;
+      }
+      .include-card p {
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        line-height: 1.65;
+      }
+      .include-detail {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border-dim);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .include-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+      }
+      .include-item svg {
+        flex-shrink: 0;
+        color: var(--gold);
+      }
+
+      /* ── Steps ── */
+      .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 32px;
+      }
+      .step {
+        text-align: center;
+        padding: 8px;
+      }
+      .step-number {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 4rem;
+        font-weight: 900;
+        color: rgba(212, 168, 67, 0.15);
+        line-height: 1;
+        margin-bottom: 12px;
+      }
+      .step h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 8px;
+      }
+      .step p {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+      .step-connector {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 8px;
+      }
+
+      /* ── CTA Section ── */
+      .cta-section {
+        background: var(--dark);
+        border-top: 1px solid var(--border-dim);
+        border-bottom: 1px solid var(--border-dim);
+        padding: 80px 24px;
+        text-align: center;
+      }
+      .cta-box {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .cta-price-row {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 12px;
+        margin: 28px 0 8px;
+        flex-wrap: wrap;
+      }
+      .cta-usd {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 3.6rem;
+        font-weight: 900;
+        color: var(--gold);
+        line-height: 1;
+      }
+      .cta-cop {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--text-muted);
+      }
+      .cta-features {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin: 16px 0 32px;
+      }
+      .cta-feature {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+      }
+      .cta-feature svg {
+        color: #22c55e;
+        flex-shrink: 0;
+      }
+
+      /* ── Trust Bar ── */
+      .trust-bar {
+        background: var(--dark-2);
+        border-top: 1px solid var(--border-dim);
+        padding: 32px 24px;
+      }
+      .trust-bar-inner {
+        max-width: 900px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
+      }
+      .trust-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+      }
+      .trust-item svg {
+        color: var(--gold);
+        flex-shrink: 0;
+      }
+
+      /* ── Footer ── */
+      .footer {
+        background: var(--dark-2);
+        border-top: 1px solid var(--border-dim);
+        padding: 32px 24px;
+        text-align: center;
+      }
+      .footer-logo {
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 900;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: 8px;
+      }
+      .footer-logo span {
+        color: var(--gold);
+      }
+      .footer-copy {
+        font-size: 0.75rem;
+        color: var(--text-dim);
+        margin-top: 8px;
+      }
+
+      @media (max-width: 640px) {
+        .hero {
+          padding: 110px 20px 60px;
+        }
+        .price-tag {
+          padding: 12px 18px;
+        }
+        .price-usd {
+          font-size: 2.2rem;
+        }
+        .price-cop {
+          font-size: 1.5rem;
+        }
+        .cta-usd {
+          font-size: 2.8rem;
+        }
+        .cta-cop {
+          font-size: 1.8rem;
+        }
+        .trust-bar-inner {
+          gap: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── NAV ── -->
+    <nav class="nav">
+      <a href="../index.html" class="nav-logo">Frank Mercado<span>Fit</span></a>
+      <div class="price-pill">
+        <svg
+          width="12"
+          height="12"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          viewBox="0 0 24 24"
+        >
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
+        $4.99 USD · Guía M-Fit™
+      </div>
+    </nav>
+
+    <!-- ── HERO ── -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-badge">
+          <div class="hero-badge-dot"></div>
+          Sistema M-Fit™ · Personalizado
+        </div>
+        <h1 class="heading-xl" style="margin-bottom: 20px">
+          Tu Plan de Nutrición<br />y Entrenamiento,<br />
+          <em class="gold">Calculado para Ti</em>
+        </h1>
+        <p
+          style="
+            color: var(--text-muted);
+            font-size: clamp(1rem, 2.2vw, 1.18rem);
+            max-width: 580px;
+            margin: 0 auto;
+            line-height: 1.75;
+          "
+        >
+          Responde el cuestionario, ve tus macros calculados al instante y
+          desbloquea tu guía de nutrición de 7 días, rutina de entrenamiento de
+          4 semanas y guía de suplementación — entregada directamente en tu
+          correo.
+        </p>
+
+        <div class="price-tag">
+          <span class="price-usd"
+            >$4.99
+            <span style="font-size: 1.4rem; color: var(--text-muted)"
+              >USD</span
+            ></span
+          >
+          <span class="price-sep">·</span>
+          <span class="price-cop"
+            >$22.000 <span style="font-size: 1rem">COP</span></span
+          >
+          <p class="price-note">
+            Pago único · Sin suscripción · Entrega automática
+          </p>
+        </div>
+
+        <a href="formulario.html" class="btn-primary" style="margin-top: 28px">
+          Empezar Mi Cuestionario
+          <svg
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            viewBox="0 0 24 24"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+
+        <div class="hero-trust">
+          <svg
+            width="13"
+            height="13"
+            fill="none"
+            stroke="#22c55e"
+            stroke-width="2.5"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+          Diseñado por Frank Mercado · NASM CPT
+          <span class="trust-dot"></span>
+          5 minutos para completar
+          <span class="trust-dot"></span>
+          100% personalizado
+        </div>
+      </div>
+    </section>
+
+    <!-- ── QUÉ INCLUYE ── -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Contenido Completo</span>
+          <h2 class="heading-lg" style="margin-top: 12px">
+            Todo lo que incluye<br /><em class="gold">tu guía</em>
+          </h2>
+          <p>
+            Tres pilares diseñados con los principios de la ciencia del
+            ejercicio NASM para que tengas un plan que funciona en la vida real.
+          </p>
+        </div>
+
+        <div class="includes-grid">
+          <!-- Plan Nutrición -->
+          <div class="include-card">
+            <div class="include-icon">
+              <svg
+                width="26"
+                height="26"
+                fill="none"
+                stroke="var(--gold)"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M3 11l19-9-9 19-2-8-8-2z" />
+              </svg>
+            </div>
+            <h3>Plan de Nutrición</h3>
+            <p>
+              Un plan de comidas de 7 días construido alrededor de tus alimentos
+              favoritos, tu objetivo y tus calorías calculadas con fórmulas
+              científicas.
+            </p>
+            <div class="include-detail">
+              <div class="include-item">
+                <svg
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  viewBox="0 0 24 24"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Desayuno, almuerzo, cena + snacks
+              </div>
+              <div class="include-item">
+                <svg
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  viewBox="0 0 24 24"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Porciones en gramos + medidas caseras
+              </div>
+              <div class="include-item">
+                <svg
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  viewBox="0 0 24 24"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Adaptado a tus preferencias y alergias
+              </div>
+              <div class="include-item">
+                <svg
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  viewBox="0 0 24 24"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Macros diarios de proteína, carbos y grasas
+              </div>
+            </div>
+          </div>
+
+          <!-- Rutina Entrenamiento -->
+          <div class="include-card" style="border-color: var(--border)">
+            <div
+              class="include-icon"
+              style="
+                background: rgba(212, 168, 67, 0.18);
+                border-color: var(--gold);
+              "
+            >
+              <svg
+                width="26"
+                height="26"
+                fill="none"
+                stroke="var(--gold)"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M6.5 6.5h11M6.5 17.5h11M3 12h18" />
+                <circle cx="6.5" cy="6.5" r="1.5" />
+                <circle cx="17.5" cy="6.5" r="1.5" />
+                <circle cx="6.5" cy="17.5" r="1.5" />
+                <circle cx="17.5" cy="17.5" r="1.5" />
+              </svg>
+            </div>
+            <h3>Rutina de Entrenamiento</h3>
+            <p>
+              4 semanas de entrenamiento progresivo adaptado a tu nivel, al
+              lugar donde entrenas y a los días que tienes disponibles.
+            </p>
+            <div class="include-detail">
+              <div class="include-item">
+                <svg
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  viewBox="0 0 24 24"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Principiante, Intermedio o Avanzado
+              </div>
+              <div class="include-item">
+                <svg
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  viewBox="0 0 24 24"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Gimnasio o entrenamiento en casa
+              </div>
+              <div class="include-item">
+                <svg
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  viewBox="0 0 24 24"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Series, reps, descanso y técnica NASM
+              </div>
+              <div class="include-item">
+                <svg
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  viewBox="0 0 24 24"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Calentamiento y enfriamiento incluidos
+              </div>
+            </div>
+          </div>
+
+          <!-- Suplementación -->
+          <div class="include-card">
+            <div class="include-icon">
+              <svg
+                width="26"
+                height="26"
+                fill="none"
+                stroke="var(--gold)"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 2a10 10 0 100 20A10 10 0 0012 2z" />
+                <path d="M12 8v8M8 12h8" />
+              </svg>
+            </div>
+            <h3>Guía de Suplementación</h3>
+            <p>
+              Sin ventas de productos ni marcas. Solo las 2-3 opciones más
+              efectivas y económicas para tu objetivo, con evidencia científica
+              real.
+            </p>
+            <div class="include-detail">
+              <div class="include-item">
+                <svg
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  viewBox="0 0 24 24"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Adaptada a tu objetivo específico
+              </div>
+              <div class="include-item">
+                <svg
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  viewBox="0 0 24 24"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Dosis y horarios de consumo
+              </div>
+              <div class="include-item">
+                <svg
+                  width="14"
+                  height="14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  viewBox="0 0 24 24"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Respaldada por estudios actuales
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CÓMO FUNCIONA ── -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">El Proceso</span>
+          <h2 class="heading-lg" style="margin-top: 12px">
+            De tu cuestionario a<br /><em class="gold">tu guía en minutos</em>
+          </h2>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step">
+            <div class="step-number">01</div>
+            <h3>Rellena el cuestionario</h3>
+            <p>
+              5 minutos para contarnos sobre tu objetivo, tu cuerpo, tus hábitos
+              alimenticios y tu experiencia de entrenamiento. Sin atajos — cada
+              respuesta afecta directamente tu plan.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-number">02</div>
+            <h3>Ve tus macros al instante</h3>
+            <p>
+              Antes de pagar, calculamos en tiempo real tus calorías y macros
+              (proteínas, carbohidratos y grasas) usando la fórmula científica
+              Mifflin-St Jeor. Verás exactamente qué necesita tu cuerpo.
+            </p>
+          </div>
+          <div class="step">
+            <div class="step-number">03</div>
+            <h3>Desbloquea tu guía completa</h3>
+            <p>
+              Con un pago único de $4.99 USD / $22.000 COP, tu guía
+              personalizada es generada y enviada automáticamente a tu correo.
+              Sin esperas largas.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CTA FINAL ── -->
+    <div class="cta-section">
+      <div class="cta-box">
+        <span class="section-label">Precio Único</span>
+        <h2 class="heading-lg" style="margin-top: 12px">
+          El primer paso de<br /><em class="gold">tu transformación</em>
+        </h2>
+        <p
+          style="
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.75;
+            margin-top: 14px;
+          "
+        >
+          Una Guía M-Fit™ vale menos que una comida fuera de casa, y es la misma
+          base científica que aplicamos con clientes de coaching 1 a 1 a $97
+          USD/mes.
+        </p>
+        <div class="cta-price-row">
+          <span class="cta-usd"
+            >$4.99
+            <span style="font-size: 1.6rem; color: var(--text-muted)"
+              >USD</span
+            ></span
+          >
+          <span style="color: var(--text-dim); font-size: 1.4rem">·</span>
+          <span class="cta-cop"
+            >$22.000 <span style="font-size: 1.1rem">COP</span></span
+          >
+        </div>
+        <div class="cta-features">
+          <span class="cta-feature">
+            <svg
+              width="14"
+              height="14"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              viewBox="0 0 24 24"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Pago único
+          </span>
+          <span class="cta-feature">
+            <svg
+              width="14"
+              height="14"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              viewBox="0 0 24 24"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Sin suscripción
+          </span>
+          <span class="cta-feature">
+            <svg
+              width="14"
+              height="14"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              viewBox="0 0 24 24"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Entrega automática
+          </span>
+          <span class="cta-feature">
+            <svg
+              width="14"
+              height="14"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              viewBox="0 0 24 24"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            100% personalizado
+          </span>
+        </div>
+        <a
+          href="formulario.html"
+          class="btn-primary"
+          style="font-size: 1.1rem; padding: 20px 44px"
+        >
+          Quiero Mi Guía Personalizada
+          <svg
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            viewBox="0 0 24 24"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+        <p style="margin-top: 12px; font-size: 0.78rem; color: var(--text-dim)">
+          Tu información es privada y nunca será compartida con terceros.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── TRUST BAR ── -->
+    <div class="trust-bar">
+      <div class="trust-bar-inner">
+        <div class="trust-item">
+          <svg
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+          Frank Mercado · NASM CPT
+        </div>
+        <div class="trust-item">
+          <svg
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 6v6l4 2" />
+          </svg>
+          +5 años asesorando clientes
+        </div>
+        <div class="trust-item">
+          <svg
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path d="M9 11l3 3L22 4" />
+            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+          </svg>
+          Fórmula Mifflin-St Jeor · Validada científicamente
+        </div>
+        <div class="trust-item">
+          <svg
+            width="18"
+            height="18"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <rect x="3" y="11" width="18" height="11" rx="2" />
+            <path d="M7 11V7a5 5 0 0110 0v4" />
+          </svg>
+          Pago seguro · SSL
+        </div>
+      </div>
+    </div>
+
+    <!-- ── FOOTER ── -->
+    <footer class="footer">
+      <div class="footer-logo">Frank Mercado<span>Fit</span></div>
+      <p style="font-size: 0.78rem; color: var(--text-dim); margin-top: 4px">
+        Sistema M-Fit™ · Guía Personalizada
+      </p>
+      <p class="footer-copy">
+        &copy; <span id="yr"></span> Frank Mercado Fit. Todos los derechos
+        reservados.
+      </p>
+    </footer>
+
+    <script>
+      document.getElementById("yr").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
