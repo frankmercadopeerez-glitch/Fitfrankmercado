@@ -1,53 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <!-- Homepage -->
-    <url>
-        <loc>https://fit.frankmercado.com/</loc>
-        <lastmod>2026-02-20</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-    
-    <!-- Plans Page -->
-    <url>
-        <loc>https://fit.frankmercado.com/planes.html</loc>
-        <lastmod>2026-02-20</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.9</priority>
-    </url>
-    
-    <!-- About Page -->
-    <url>
-        <loc>https://fit.frankmercado.com/about.html</loc>
-        <lastmod>2026-02-20</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    <!-- Contact Page -->
-    <url>
-        <loc>https://fit.frankmercado.com/contacto.html</loc>
-        <lastmod>2026-02-20</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    
-    <!-- FAQ Page -->
-    <url>
-        <loc>https://fit.frankmercado.com/faq.html</loc>
-        <lastmod>2026-02-20</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.7</priority>
-    </url>
-    
-    <!-- Blog Main Page -->
-    <url>
-        <loc>https://fit.frankmercado.com/blog/</loc>
-        <lastmod>2026-02-20</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
+
+  <!-- ══ PÁGINA PRINCIPAL ══ -->
+  <url>
+    <loc>https://fit.frankmercado.com/</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- ══ TIENDA / CATÁLOGO ══ -->
+  <url>
+    <loc>https://fit.frankmercado.com/tienda.html</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- ══ LANDING PAGES GUÍAS ══ -->
+  <url>
+    <loc>https://fit.frankmercado.com/tienda/guia-definicion.html</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://fit.frankmercado.com/tienda/guia-ganancia.html</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- ══ PLANES / SERVICIOS ══ -->
+  <url>
+    <loc>https://fit.frankmercado.com/planes.html</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- ══ BLOG ══ -->
+  <url>
+    <loc>https://fit.frankmercado.com/blog/</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fit.frankmercado.com/blog/como-empezar-entrenamiento.html</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fit.frankmercado.com/blog/habitos-saludables.html</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fit.frankmercado.com/blog/nutricion-para-principiantes.html</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ══ PÁGINAS INSTITUCIONALES ══ -->
+  <url>
+    <loc>https://fit.frankmercado.com/about.html</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://fit.frankmercado.com/faq.html</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://fit.frankmercado.com/politica-privacidad.html</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://fit.frankmercado.com/terminos-condiciones.html</loc>
+    <lastmod>2026-05-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+
     <!-- Blog Articles -->
     <url>
         <loc>https://fit.frankmercado.com/blog/como-empezar-entrenamiento.html</loc>

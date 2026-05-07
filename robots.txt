@@ -1,16 +1,21 @@
-# robots.txt for fit.frankmercado.com
-# Generated for Frank Mercado Fit
+# robots.txt para fit.frankmercado.com
+# Frank Mercado Fit — Entrenador Personal Cartagena, Colombia
 
 User-agent: *
 Allow: /
 
-# Sitemap location
+# Páginas privadas de acceso post-pago (no indexar)
+Disallow: /tienda/acceso-definicion.html
+Disallow: /tienda/acceso-ganancia.html
+
+# Contenido de guías (solo para compradores, acceso directo)
+Disallow: /guias/
+
+# Plan gratuito — URL compartida de forma privada
+Disallow: /freeplan/
+
+# Página de éxito (sin valor SEO)
+Disallow: /success.html
+
+# Sitemap
 Sitemap: https://fit.frankmercado.com/sitemap.xml
-
-# Crawl delay (opcional, para evitar sobrecarga)
-Crawl-delay: 1
-
-# Disallow admin or private areas (if any)
-Disallow: /admin/
-Disallow: /private/
-Disallow: /*.pdf$
