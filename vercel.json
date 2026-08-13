@@ -1,0 +1,37 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": true,
+  "redirects": [
+    { "source": "/about.html", "destination": "/about/", "statusCode": 301 },
+    { "source": "/faq.html", "destination": "/faq/", "statusCode": 301 },
+    { "source": "/planes.html", "destination": "/program/", "statusCode": 301 },
+    { "source": "/tienda.html", "destination": "/es-us/programa/", "statusCode": 301 },
+    { "source": "/politica-privacidad.html", "destination": "/es-us/legal/privacidad/", "statusCode": 301 },
+    { "source": "/terminos-condiciones.html", "destination": "/es-us/legal/terminos/", "statusCode": 301 },
+    { "source": "/success.html", "destination": "/", "statusCode": 301 },
+    { "source": "/freeplan/:path*", "destination": "/es-us/gratis/", "statusCode": 301 },
+    { "source": "/guia/:path*", "destination": "/es-us/programa/", "statusCode": 301 },
+    { "source": "/guias/:path*", "destination": "/es-us/programa/", "statusCode": 301 },
+    { "source": "/tienda/:path*", "destination": "/es-us/programa/", "statusCode": 301 },
+    { "source": "/blog/como-empezar-entrenamiento.html", "destination": "/es-us/recursos/entrenamiento-fuerza-trabajadores-turnos/", "statusCode": 301 },
+    { "source": "/blog/habitos-saludables.html", "destination": "/es-us/recursos/entrenamiento-fuerza-trabajadores-turnos/", "statusCode": 301 },
+    { "source": "/blog/cardio-para-bajar-de-peso.html", "destination": "/es-us/recursos/entrenamiento-fuerza-trabajadores-turnos/", "statusCode": 301 },
+    { "source": "/blog/:path*", "destination": "/es-us/recursos/", "statusCode": 301 }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), payment=()" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    }
+  ]
+}
