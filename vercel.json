@@ -3,19 +3,19 @@
   "cleanUrls": true,
   "trailingSlash": true,
   "redirects": [
-    { "source": "/planes", "destination": "/program/", "permanent": true },
-    { "source": "/tienda", "destination": "/es-us/programa/", "permanent": true },
-    { "source": "/politica-privacidad", "destination": "/es-us/legal/privacidad/", "permanent": true },
-    { "source": "/terminos-condiciones", "destination": "/es-us/legal/terminos/", "permanent": true },
-    { "source": "/success", "destination": "/", "permanent": true },
-    { "source": "/freeplan/:path*", "destination": "/es-us/gratis/", "permanent": true },
-    { "source": "/guia/:path*", "destination": "/es-us/programa/", "permanent": true },
-    { "source": "/guias/:path*", "destination": "/es-us/programa/", "permanent": true },
-    { "source": "/tienda/:path*", "destination": "/es-us/programa/", "permanent": true },
-    { "source": "/blog/como-empezar-entrenamiento", "destination": "/es-us/recursos/entrenamiento-fuerza-trabajadores-turnos/", "permanent": true },
-    { "source": "/blog/habitos-saludables", "destination": "/es-us/recursos/entrenamiento-fuerza-trabajadores-turnos/", "permanent": true },
-    { "source": "/blog/cardio-para-bajar-de-peso", "destination": "/es-us/recursos/entrenamiento-fuerza-trabajadores-turnos/", "permanent": true },
-    { "source": "/blog/:path*", "destination": "/es-us/recursos/", "permanent": true }
+    { "source": "/planes/", "destination": "/program/", "permanent": true },
+    { "source": "/tienda/", "destination": "/es-us/programa/", "permanent": true },
+    { "source": "/politica-privacidad/", "destination": "/es-us/legal/privacidad/", "permanent": true },
+    { "source": "/terminos-condiciones/", "destination": "/es-us/legal/terminos/", "permanent": true },
+    { "source": "/success/", "destination": "/", "permanent": true },
+    { "source": "/freeplan/(.*)", "destination": "/es-us/gratis/", "permanent": true },
+    { "source": "/guia/(.*)", "destination": "/es-us/programa/", "permanent": true },
+    { "source": "/guias/(.*)", "destination": "/es-us/programa/", "permanent": true },
+    { "source": "/tienda/(.*)", "destination": "/es-us/programa/", "permanent": true },
+    { "source": "/blog/como-empezar-entrenamiento/", "destination": "/es-us/recursos/entrenamiento-fuerza-trabajadores-turnos/", "permanent": true },
+    { "source": "/blog/habitos-saludables/", "destination": "/es-us/recursos/entrenamiento-fuerza-trabajadores-turnos/", "permanent": true },
+    { "source": "/blog/cardio-para-bajar-de-peso/", "destination": "/es-us/recursos/entrenamiento-fuerza-trabajadores-turnos/", "permanent": true },
+    { "source": "/blog/(.*)", "destination": "/es-us/recursos/", "permanent": true }
   ],
   "headers": [
     {
