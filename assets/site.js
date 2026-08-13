@@ -32,7 +32,7 @@
   document.querySelectorAll("[data-checkout]").forEach(function (link) {
     var checkoutType = link.getAttribute("data-checkout");
     var checkoutUrl = checkoutMap[checkoutType] || "";
-    var isPending = !checkoutUrl || checkoutUrl.indexOf("REPLACE_") !== -1;
+    var isPending = config.checkoutEnabled !== true || !checkoutUrl || checkoutUrl.indexOf("REPLACE_") !== -1;
 
     if (isPending) {
       var subject = checkoutType === "paid"
@@ -40,6 +40,9 @@
         : (lang === "es" ? "Quiero la guía gratuita ShiftStarter" : "I want the free ShiftStarter guide");
       link.href = "mailto:" + (config.supportEmail || "frankmercadopeerez@gmail.com") + "?subject=" + encodeURIComponent(subject);
       link.setAttribute("data-checkout-pending", "true");
+      link.textContent = checkoutType === "paid"
+        ? (lang === "es" ? "Avísame cuando abra la compra" : "Tell me when checkout opens")
+        : (lang === "es" ? "Avísame cuando abra la descarga" : "Tell me when downloads open");
     } else {
       link.href = checkoutUrl;
       link.target = "_blank";
