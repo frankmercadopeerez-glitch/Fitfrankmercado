@@ -32,7 +32,10 @@
   document.querySelectorAll("[data-checkout]").forEach(function (link) {
     var checkoutType = link.getAttribute("data-checkout");
     var checkoutUrl = checkoutMap[checkoutType] || "";
-    var isPending = config.checkoutEnabled !== true || !checkoutUrl || checkoutUrl.indexOf("REPLACE_") !== -1;
+    var checkoutEnabled = checkoutType === "paid"
+      ? config.paidCheckoutEnabled === true
+      : config.freeCheckoutEnabled === true;
+    var isPending = !checkoutEnabled || !checkoutUrl || checkoutUrl.indexOf("REPLACE_") !== -1;
 
     if (isPending) {
       var subject = checkoutType === "paid"
