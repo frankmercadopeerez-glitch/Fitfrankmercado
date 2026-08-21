@@ -122,6 +122,8 @@ h3 { margin-bottom: 14px; font-size: clamp(1.4rem, 2.2vw, 2rem); }
 .button-ghost { background: transparent; }
 .button-small { min-height: 42px; padding: 10px 17px; font-size: .88rem; }
 .button[data-checkout-pending="true"]::after { content: "↗"; }
+.paypal-checkout { margin-top: 28px; min-height: 48px; }
+.paypal-checkout [data-paypal-status] { margin-top: 12px; }
 .button-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
 .hero { position: relative; overflow: hidden; padding: 88px 0 72px; color: var(--cream); background: var(--ink); }
 .hero::after {

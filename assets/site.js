@@ -53,12 +53,147 @@
     }
   });
 
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      var existing = document.querySelector("script[data-paypal-sdk]");
+      if (existing) {
+        if (window.paypal) resolve();
+        else existing.addEventListener("load", resolve, { once: true });
+        return;
+      }
+      var script = document.createElement("script");
+      script.src = src;
+      script.async = true;
+      script.setAttribute("data-paypal-sdk", "true");
+      script.addEventListener("load", resolve, { once: true });
+      script.addEventListener("error", reject, { once: true });
+      document.head.appendChild(script);
+    });
+  }
+
+  function encodePaymentHandoff(value) {
+    var bytes = new TextEncoder().encode(JSON.stringify(value));
+    var binary = "";
+    bytes.forEach(function (byte) { binary += String.fromCharCode(byte); });
+    return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+  }
+
+  function decodePaymentHandoff(value) {
+    try {
+      var base64 = value.replace(/-/g, "+").replace(/_/g, "/");
+      while (base64.length % 4) base64 += "=";
+      var binary = atob(base64);
+      var bytes = Uint8Array.from(binary, function (char) { return char.charCodeAt(0); });
+      return JSON.parse(new TextDecoder().decode(bytes));
+    } catch (_) {
+      return null;
+    }
+  }
+
+  var paypalArea = document.querySelector("[data-paypal-checkout]");
+  if (paypalArea) {
+    var paypalButtons = paypalArea.querySelector("[data-paypal-buttons]");
+    var paypalStatus = paypalArea.querySelector("[data-paypal-status]");
+    var fallback = document.querySelector("[data-paypal-fallback]");
+    window.fetch(config.paypalApiCheckoutUrl || "/api/paypal-config", { headers: { Accept: "application/json" } })
+      .then(function (response) {
+        if (!response.ok) throw new Error("Checkout configuration unavailable");
+        return response.json();
+      }).then(function (paymentConfig) {
+        if (!paymentConfig.enabled || !paymentConfig.clientId) throw new Error("Checkout not active");
+        var sdk = "https://www.paypal.com/sdk/js?client-id=" + encodeURIComponent(paymentConfig.clientId)
+          + "&currency=" + encodeURIComponent(paymentConfig.currency)
+          + "&intent=capture&components=buttons";
+        return loadScript(sdk).then(function () {
+          if (!window.paypal || !window.paypal.Buttons) throw new Error("PayPal SDK unavailable");
+          if (fallback) fallback.hidden = true;
+          paypalArea.hidden = false;
+          if (paypalStatus) {
+            paypalStatus.hidden = false;
+            paypalStatus.textContent = lang === "es"
+              ? "Pago seguro de $19 USD procesado por PayPal."
+              : "Secure $19 USD payment processed by PayPal.";
+          }
+          return window.paypal.Buttons({
+            style: { layout: "vertical", shape: "rect", label: "paypal", height: 48 },
+            createOrder: function () {
+              return window.fetch(config.paypalCreateOrderUrl || "/api/paypal-create-order", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", Accept: "application/json" },
+                body: "{}"
+              }).then(function (response) {
+                if (!response.ok) throw new Error("Order creation failed");
+                return response.json();
+              }).then(function (order) { return order.id; });
+            },
+            onApprove: function (data) {
+              if (paypalStatus) paypalStatus.textContent = lang === "es" ? "Confirmando tu pago…" : "Confirming your payment…";
+              return window.fetch(config.paypalCaptureOrderUrl || "/api/paypal-capture-order", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", Accept: "application/json" },
+                body: JSON.stringify({ orderId: data.orderID })
+              }).then(function (response) {
+                if (!response.ok) throw new Error("Payment capture failed");
+                return response.json();
+              }).then(function (result) {
+                var handoff = encodePaymentHandoff({
+                  orderId: result.orderId,
+                  captureId: result.captureId,
+                  payerEmail: result.payerEmail,
+                  verificationToken: result.verificationToken
+                });
+                window.location.assign((lang === "es" ? "/es-us/formulario/" : "/intake/") + "#payment=" + handoff);
+              });
+            },
+            onCancel: function () {
+              if (paypalStatus) paypalStatus.textContent = lang === "es" ? "El pago no se completó." : "The payment was not completed.";
+            },
+            onError: function () {
+              if (paypalStatus) paypalStatus.textContent = lang === "es"
+                ? "PayPal no pudo completar el proceso. Inténtalo de nuevo."
+                : "PayPal could not complete the process. Please try again.";
+            }
+          }).render(paypalButtons);
+        });
+      }).catch(function () {
+        paypalArea.hidden = true;
+        if (fallback) fallback.hidden = false;
+      });
+  }
+
   var intakeForm = document.querySelector("[data-intake-form]");
   if (intakeForm) {
-    var endpoint = config.formspreeEndpoint || "";
-    var enabled = config.intakeEnabled === true && endpoint && endpoint.indexOf("REPLACE_") === -1;
+    var endpoint = config.verifiedIntakeUrl || "/api/intake";
+    var enabled = config.intakeEnabled === true;
     var submitButton = intakeForm.querySelector("button[type='submit']");
     var status = document.querySelector("[data-intake-status]");
+    var handoffMatch = window.location.hash.match(/^#payment=([A-Za-z0-9_-]+)$/);
+    var handoff = handoffMatch ? decodePaymentHandoff(handoffMatch[1]) : null;
+    var orderField = intakeForm.querySelector("[name='paypal_order_id']");
+    var captureField = intakeForm.querySelector("[name='paypal_capture_id']");
+    var tokenField = intakeForm.querySelector("[name='payment_verification_token']");
+    var payerEmailField = intakeForm.querySelector("[name='paypal_payer_email']");
+    if (handoff && handoff.orderId && handoff.captureId && handoff.verificationToken) {
+      if (orderField) orderField.value = handoff.orderId;
+      if (captureField) captureField.value = handoff.captureId;
+      if (tokenField) tokenField.value = handoff.verificationToken;
+      if (payerEmailField && handoff.payerEmail) payerEmailField.value = handoff.payerEmail;
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+      if (status) {
+        status.hidden = false;
+        status.innerHTML = lang === "es"
+          ? "<strong>Pago confirmado.</strong><p>Completa el formulario para que pueda preparar tu plan.</p>"
+          : "<strong>Payment confirmed.</strong><p>Complete the intake so I can prepare your plan.</p>";
+      }
+    } else {
+      enabled = false;
+      if (status) {
+        status.hidden = false;
+        status.innerHTML = lang === "es"
+          ? "<strong>Primero completa el pago seguro.</strong><p>Regresa a <a href='/es-us/programa/'>la página del plan</a>; el formulario se habilitará automáticamente después de la confirmación de PayPal.</p>"
+          : "<strong>Complete secure payment first.</strong><p>Return to <a href='/program/'>the plan page</a>; this intake unlocks automatically after PayPal confirms the payment.</p>";
+      }
+    }
 
     if (enabled) {
       intakeForm.action = endpoint;
@@ -77,10 +212,12 @@
             : "<strong>Sending your intake securely…</strong>";
         }
 
+        var payload = {};
+        new FormData(intakeForm).forEach(function (value, key) { payload[key] = value; });
         window.fetch(endpoint, {
           method: "POST",
-          body: new FormData(intakeForm),
-          headers: { Accept: "application/json" }
+          body: JSON.stringify(payload),
+          headers: { "Content-Type": "application/json", Accept: "application/json" }
         }).then(function (response) {
           if (!response.ok) throw new Error("Form submission failed");
           window.location.assign(lang === "es" ? "/es-us/gracias/" : "/thanks/");
@@ -101,13 +238,7 @@
       intakeForm.action = "";
       if (submitButton) {
         submitButton.disabled = true;
-        submitButton.textContent = lang === "es" ? "Formulario en activación" : "Form activation pending";
-      }
-      if (status) {
-        status.hidden = false;
-        status.innerHTML = lang === "es"
-          ? "<strong>El formulario todavía no está recibiendo solicitudes.</strong><p>No pagues hasta que este aviso desaparezca. Puedes escribir a <a href='mailto:" + (config.supportEmail || "frankmercadopeerez@gmail.com") + "'>soporte</a>.</p>"
-          : "<strong>The intake form is not accepting submissions yet.</strong><p>Do not pay until this notice disappears. You can <a href='mailto:" + (config.supportEmail || "frankmercadopeerez@gmail.com") + "'>email support</a>.</p>";
+        submitButton.textContent = lang === "es" ? "Pago requerido para continuar" : "Payment required to continue";
       }
     }
   }
