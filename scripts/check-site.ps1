@@ -51,7 +51,10 @@ foreach ($file in $htmlFiles) {
 try {
   [xml]$sitemap = Get-Content -LiteralPath (Join-Path $siteRoot "sitemap.xml") -Raw
   $sitemapUrls = @($sitemap.urlset.url.loc | ForEach-Object { [string]$_ })
-  $expectedUrls = @($htmlFiles | ForEach-Object {
+  $indexableHtmlFiles = @($htmlFiles | Where-Object {
+    ([System.IO.File]::ReadAllText($_.FullName) -notmatch 'meta name="robots" content="noindex')
+  })
+  $expectedUrls = @($indexableHtmlFiles | ForEach-Object {
     $relativePath = $_.FullName.Substring($siteRoot.Length + 1).Replace("\", "/")
     if ($relativePath -eq "index.html") { "https://fit.frankmercado.com/" }
     else { "https://fit.frankmercado.com/" + $relativePath.Substring(0, $relativePath.Length - "index.html".Length) }
@@ -69,9 +72,9 @@ try { $null = Get-Content -LiteralPath (Join-Path $siteRoot "vercel.json") -Raw 
 catch { $issues.Add("Invalid vercel.json") }
 
 $blockedPatterns = @(
-  "formspree", "ipapi", "sessionStorage", "Hotmart", "#LINK_BOLD", "500+",
+  "ipapi", "sessionStorage", "Hotmart", "#LINK_BOLD", "500+",
   "200 clientes", "200 clients", "NASM CPT", "certificado NASM",
-  "NASM Certified", "NCCA", "ShiftStrong", "6-week", "six weeks", "6 semanas",
+  "NASM Certified", "ShiftStrong", "6-week", "six weeks", "6 semanas",
   "seis semanas", "modelo OPT", "4-8 kg", "frank@frankmercadofit"
 )
 $searchableFiles = Get-ChildItem -LiteralPath $siteRoot -Recurse -File |

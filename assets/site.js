@@ -26,25 +26,25 @@
 
   var checkoutMap = {
     free: config.freeGuideUrl,
-    paid: config.paidProgramUrl
+    personal: config.personalPlanPaymentUrl
   };
 
   document.querySelectorAll("[data-checkout]").forEach(function (link) {
     var checkoutType = link.getAttribute("data-checkout");
     var checkoutUrl = checkoutMap[checkoutType] || "";
-    var checkoutEnabled = checkoutType === "paid"
-      ? config.paidCheckoutEnabled === true
+    var checkoutEnabled = checkoutType === "personal"
+      ? config.personalPlanPaymentEnabled === true
       : config.freeCheckoutEnabled === true;
     var isPending = !checkoutEnabled || !checkoutUrl || checkoutUrl.indexOf("REPLACE_") !== -1;
 
     if (isPending) {
-      var subject = checkoutType === "paid"
-        ? (lang === "es" ? "Avísame cuando Fuerza con cualquier horario esté disponible" : "Tell me when Strength on Any Schedule is available")
+      var subject = checkoutType === "personal"
+        ? (lang === "es" ? "Consulta sobre mi plan personalizado" : "Question about my custom training plan")
         : (lang === "es" ? "Quiero la guía gratuita ShiftStarter" : "I want the free ShiftStarter guide");
       link.href = "mailto:" + (config.supportEmail || "frankmercadopeerez@gmail.com") + "?subject=" + encodeURIComponent(subject);
       link.setAttribute("data-checkout-pending", "true");
-      link.textContent = checkoutType === "paid"
-        ? (lang === "es" ? "Avísame cuando abra la compra" : "Tell me when checkout opens")
+      link.textContent = checkoutType === "personal"
+        ? (lang === "es" ? "Consultar antes de pagar" : "Ask before paying")
         : (lang === "es" ? "Avísame cuando abra la descarga" : "Tell me when downloads open");
     } else {
       link.href = checkoutUrl;
@@ -52,6 +52,30 @@
       link.rel = "noopener noreferrer";
     }
   });
+
+  var intakeForm = document.querySelector("[data-intake-form]");
+  if (intakeForm) {
+    var endpoint = config.formspreeEndpoint || "";
+    var enabled = config.intakeEnabled === true && endpoint && endpoint.indexOf("REPLACE_") === -1;
+    var submitButton = intakeForm.querySelector("button[type='submit']");
+    var status = document.querySelector("[data-intake-status]");
+
+    if (enabled) {
+      intakeForm.action = endpoint;
+    } else {
+      intakeForm.action = "";
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = lang === "es" ? "Formulario en activación" : "Form activation pending";
+      }
+      if (status) {
+        status.hidden = false;
+        status.innerHTML = lang === "es"
+          ? "<strong>El formulario todavía no está recibiendo solicitudes.</strong><p>No pagues hasta que este aviso desaparezca. Puedes escribir a <a href='mailto:" + (config.supportEmail || "frankmercadopeerez@gmail.com") + "'>soporte</a>.</p>"
+          : "<strong>The intake form is not accepting submissions yet.</strong><p>Do not pay until this notice disappears. You can <a href='mailto:" + (config.supportEmail || "frankmercadopeerez@gmail.com") + "'>email support</a>.</p>";
+      }
+    }
+  }
 
   document.querySelectorAll("a[target='_blank']").forEach(function (link) {
     var rel = (link.getAttribute("rel") || "").split(/\s+/).filter(Boolean);

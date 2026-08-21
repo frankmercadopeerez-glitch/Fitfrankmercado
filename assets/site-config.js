@@ -1,11 +1,14 @@
 window.FMF_CONFIG = Object.freeze({
   freeGuideUrl: "https://payhip.com/b/d5lf2",
-  paidProgramUrl: "https://payhip.com/b/38d6q",
+  personalPlanPaymentUrl: "https://www.paypal.me/frankmercado1998/19USD",
+  personalPlanIntakeUrlEn: "/intake/",
+  personalPlanIntakeUrlEs: "/es-us/formulario/",
+  formspreeEndpoint: "https://formspree.io/f/xblzowrj",
   freeCheckoutEnabled: true,
-  paidCheckoutEnabled: false,
+  personalPlanPaymentEnabled: true,
+  intakeEnabled: true,
   supportEmail: "frankmercadopeerez@gmail.com",
-  standardPriceUsd: 29,
-  foundingCouponCode: "FOUNDING20",
-  foundingDiscountUsd: 10,
-  foundingBuyerLimit: 20
+  personalPlanPriceUsd: 19,
+  personalPlanRegularPriceUsd: 29,
+  deliveryWindowHours: 24
 });
