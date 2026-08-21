@@ -251,6 +251,10 @@ h3 { margin-bottom: 14px; font-size: clamp(1.4rem, 2.2vw, 2rem); }
 .form-section { margin-top: 34px; padding-top: 28px; border-top: 2px solid var(--ink); }
 .form-section:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
 .form-section h2 { font-size: clamp(1.55rem, 3vw, 2.2rem); }
+.intake-payment { margin-top: 24px; padding: clamp(20px, 4vw, 30px); background: #fff; border: 2px solid var(--ink); border-radius: var(--radius); }
+.intake-payment[hidden] { display: none; }
+.intake-payment [data-intake-paypal-buttons] { margin-top: 20px; min-height: 48px; }
+.intake-payment [data-intake-payment-status] { margin-top: 14px; }
 .radio-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
 .choice { display: flex; gap: 10px; align-items: flex-start; min-height: 52px; padding: 12px; background: #f0ece1; border: 1px solid var(--line); border-radius: 11px; }
 .choice input { width: 19px; height: 19px; flex: 0 0 auto; margin-top: 2px; }
