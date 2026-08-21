@@ -20,10 +20,17 @@ module.exports = async function handler(req, res) {
     return sendJson(res, 400, { error: "invalid_order_id" });
   }
   try {
-    const order = await paypalRequest(`/v2/checkout/orders/${encodeURIComponent(orderId)}/capture`, {
-      method: "POST",
-      headers: { "PayPal-Request-Id": `capture-${orderId}` }
-    });
+    try {
+      await paypalRequest(`/v2/checkout/orders/${encodeURIComponent(orderId)}/capture`, {
+        method: "POST",
+        headers: { "PayPal-Request-Id": `capture-${orderId}` }
+      });
+    } catch (error) {
+      // A browser retry can arrive after PayPal has already captured the order.
+      // In that case the authoritative GET below still verifies every field.
+      if (error.status !== 422) throw error;
+    }
+    const order = await paypalRequest(`/v2/checkout/orders/${encodeURIComponent(orderId)}`);
     const capture = captureFromOrder(order);
     if (!capture || !isExpectedPayment(order, capture.id)) {
       return sendJson(res, 409, { error: "payment_not_completed" });
