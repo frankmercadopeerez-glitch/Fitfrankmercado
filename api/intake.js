@@ -38,17 +38,21 @@ module.exports = async function handler(req, res) {
       return sendJson(res, 403, { error: "payment_not_completed" });
     }
 
+    const spanishPlan = ["Spanish", "Español"].includes(body.plan_language);
+    const deliveryLanguage = spanishPlan ? "ESPAÑOL" : "ENGLISH";
     const forwarded = {
       ...body,
       payment_verification_token: undefined,
       payment_status: "VERIFIED_BY_SERVER",
+      delivery_language: deliveryLanguage,
+      delivery_language_code: spanishPlan ? "es" : "en",
       verified_order_id: token.orderId,
       verified_capture_id: token.captureId,
       verified_amount: `${token.amount} ${token.currency}`,
       paypal_payer_email: token.payerEmail || body.paypal_payer_email || "not provided",
       _subject: body.language === "Español"
-        ? `[PAGO VERIFICADO] Plan personalizado - ${body.full_name}`
-        : `[PAYMENT VERIFIED] Custom plan - ${body.full_name}`
+        ? `[PAGO VERIFICADO][${deliveryLanguage}] Plan personalizado - ${body.full_name}`
+        : `[PAYMENT VERIFIED][${deliveryLanguage}] Custom plan - ${body.full_name}`
     };
     delete forwarded.payment_verification_token;
 
