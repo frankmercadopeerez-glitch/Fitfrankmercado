@@ -62,6 +62,41 @@
 
     if (enabled) {
       intakeForm.action = endpoint;
+      intakeForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (!intakeForm.reportValidity()) return;
+
+        if (submitButton) {
+          submitButton.disabled = true;
+          submitButton.textContent = lang === "es" ? "Enviando solicitud…" : "Sending request…";
+        }
+        if (status) {
+          status.hidden = false;
+          status.innerHTML = lang === "es"
+            ? "<strong>Enviando tu formulario de forma segura…</strong>"
+            : "<strong>Sending your intake securely…</strong>";
+        }
+
+        window.fetch(endpoint, {
+          method: "POST",
+          body: new FormData(intakeForm),
+          headers: { Accept: "application/json" }
+        }).then(function (response) {
+          if (!response.ok) throw new Error("Form submission failed");
+          window.location.assign(lang === "es" ? "/es-us/gracias/" : "/thanks/");
+        }).catch(function () {
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = lang === "es" ? "Enviar mi formulario de forma segura" : "Submit my intake securely";
+          }
+          if (status) {
+            status.hidden = false;
+            status.innerHTML = lang === "es"
+              ? "<strong>No se pudo enviar.</strong><p>Revisa tu conexión e inténtalo una vez más. Si continúa, escribe a <a href='mailto:" + (config.supportEmail || "frankmercadopeerez@gmail.com") + "'>soporte</a>.</p>"
+              : "<strong>Submission did not go through.</strong><p>Check your connection and try once more. If it continues, <a href='mailto:" + (config.supportEmail || "frankmercadopeerez@gmail.com") + "'>email support</a>.</p>";
+          }
+        });
+      });
     } else {
       intakeForm.action = "";
       if (submitButton) {
